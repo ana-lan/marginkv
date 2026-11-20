@@ -1,0 +1,242 @@
+{
+  "info": {
+    "timestamp_utc": "2026-11-20T22:43:11+00:00",
+    "git_commit": "4d3b010f77977776dd45d4a793218ed09709d26c",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "bm25s": "0.3.16",
+      "numpy": "2.4.6"
+    }
+  },
+  "device": "mps",
+  "dtype": "torch.bfloat16",
+  "seed": {
+    "cpu": true,
+    "mps": true
+  },
+  "matmul": {
+    "cpu_bf16": {
+      "max_abs_err": 0.60382080078125,
+      "rel_fro_err": 0.0028794854879379272
+    },
+    "mps_bf16": {
+      "max_abs_err": 0.60382080078125,
+      "rel_fro_err": 0.0028794705867767334
+    },
+    "mps_fp32": {
+      "max_abs_err": 0.0,
+      "rel_fro_err": 0.0
+    }
+  },
+  "fp8": {
+    "cpu": {
+      "float8_e4m3fn": {
+        "ok": true,
+        "roundtrip_max_abs_err": 0.125
+      },
+      "float8_e5m2": {
+        "ok": true,
+        "roundtrip_max_abs_err": 0.1875
+      }
+    },
+    "mps": {
+      "float8_e4m3fn": {
+        "ok": true,
+        "roundtrip_max_abs_err": 0.125
+      },
+      "float8_e5m2": {
+        "ok": false,
+        "error": "RuntimeError: Undefined type Float8_e5m2"
+      }
+    }
+  },
+  "tokens": {
+    "yes_id": 9693,
+    "no_id": 2152,
+    "pad_id": 151643,
+    "unk_id": null
+  },
+  "toy_lengths": {
+    "rel": 108,
+    "irr": 108
+  },
+  "attn_impl_default": "sdpa",
+  "single_pair_latency_ms": {
+    "n": 5,
+    "mean": 71.5981915993325,
+    "p50": 71.42679100070382,
+    "p95": 72.23237519865506
+  },
+  "cache": {
+    "type": "DynamicCache",
+    "module": "transformers.cache_utils",
+    "public_attrs": [
+      "activate_past_recording",
+      "batch_repeat_interleave",
+      "batch_select_indices",
+      "batch_size",
+      "crop",
+      "early_initialization",
+      "get_conv_state",
+      "get_mask_sizes",
+      "get_max_length",
+      "get_query_offset",
+      "get_recurrent_state",
+      "get_seq_length",
+      "has_previous_state",
+      "is_compileable",
+      "is_croppable",
+      "is_dummy",
+      "is_initialized",
+      "is_linear",
+      "is_recording_past",
+      "is_sliding",
+      "layer_class_to_replicate",
+      "layers",
+      "offload",
+      "offloading",
+      "prefetch",
+      "reorder_cache",
+      "reset",
+      "update",
+      "update_conv_state",
+      "update_indexer",
+      "update_recurrent_state"
+    ],
+    "get_seq_length": 108,
+    "layer_type": "DynamicLayer",
+    "layer_attrs": [
+      "batch_repeat_interleave",
+      "batch_select_indices",
+      "crop",
+      "device",
+      "dtype",
+      "get_mask_sizes",
+      "get_max_length",
+      "get_seq_length",
+      "is_compileable",
+      "is_croppable",
+      "is_initialized",
+      "is_sliding",
+      "keys",
+      "lazy_initialization",
+      "offload",
+      "prefetch",
+      "reorder_cache",
+      "reset",
+      "supports_early_init",
+      "update",
+      "values"
+    ],
+    "access": "cache.layers[i].keys / cache.layers[i].values",
+    "num_layers": 28,
+    "key_shape": [
+      1,
+      8,
+      108,
+      128
+    ],
+    "value_shape": [
+      1,
+      8,
+      108,
+      128
+    ],
+    "dtype": "torch.bfloat16",
+    "device": "mps:0",
+    "seq_len": 108,
+    "bytes_total": 12386304,
+    "bytes_per_token": 114688.0,
+    "expected_bytes_per_token": 114688
+  },
+  "eager_attention": {
+    "ok": true,
+    "num_layers": 28,
+    "shape_layer0": [
+      1,
+      16,
+      108,
+      108
+    ],
+    "rowsum_max_err": 2.384185791015625e-07
+  },
+  "scores": {
+    "mps_bf16_batch": [
+      0.9994115233421326,
+      1.0011979611590505e-05
+    ],
+    "mps_bf16_single": [
+      0.9994115233421326,
+      1.0011979611590505e-05
+    ],
+    "cpu_fp32_batch": [
+      0.9994795918464661,
+      9.907422281685285e-06
+    ],
+    "cpu_fp32_single": [
+      0.9994795918464661,
+      9.907545063470025e-06
+    ],
+    "pad_invariance_cpu_max_abs": 1.227817847393453e-10,
+    "pad_invariance_mps_max_abs": 0.0,
+    "mps_vs_cpu_max_abs": 6.80685043334961e-05
+  },
+  "checks": [
+    {
+      "name": "python is arm64",
+      "passed": true,
+      "detail": "arm64"
+    },
+    {
+      "name": "mps available",
+      "passed": true,
+      "detail": "mps"
+    },
+    {
+      "name": "seeding reproducible",
+      "passed": true,
+      "detail": "{'cpu': True, 'mps': True}"
+    },
+    {
+      "name": "yes/no/pad ids valid",
+      "passed": true,
+      "detail": "yes=9693 no=2152 pad=151643"
+    },
+    {
+      "name": "cache layout found",
+      "passed": true,
+      "detail": "cache.layers[i].keys / cache.layers[i].values"
+    },
+    {
+      "name": "cache bytes/token match config",
+      "passed": true,
+      "detail": "measured=114688.0 expected=114688"
+    },
+    {
+      "name": "relevant > 0.5 > irrelevant (mps bf16)",
+      "passed": true,
+      "detail": "rel=0.9994 irr=0.0000"
+    },
+    {
+      "name": "relevant > 0.5 > irrelevant (cpu fp32)",
+      "passed": true,
+      "detail": "rel=0.9995 irr=0.0000"
+    },
+    {
+      "name": "padding invariance (cpu fp32, < 1e-4)",
+      "passed": true,
+      "detail": "1.23e-10"
+    },
+    {
+      "name": "eager attention weights (rows sum to 1)",
+      "passed": true,
+      "detail": "shape=[1, 16, 108, 108] rowsum_err=2.384185791015625e-07"
+    }
+  ]
+}
