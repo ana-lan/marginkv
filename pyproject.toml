@@ -1,0 +1,20 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "marginkv"
+version = "0.0.1"
+description = "Storage-efficient KV cache reuse for decoder-only reranking"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+# Dependencies are pinned in requirements.txt (Mac) and requirements-gpu.txt (RunPod).
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

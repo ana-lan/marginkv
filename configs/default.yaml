@@ -1,0 +1,37 @@
+# configs/default.yaml
+# Shared settings for every experiment. Change only with a decisions-log entry.
+
+seed: 42
+
+datasets: [scifact, nfcorpus]
+split: test
+
+paths:                     # relative to the repo root
+  data_dir: data
+  artifacts_dir: artifacts
+  results_dir: results
+
+models:
+  qwen3:
+    name: Qwen/Qwen3-Reranker-0.6B
+    revision: main         # replaced with the exact commit hash in 0.4
+  bge:
+    name: BAAI/bge-reranker-v2-m3
+    revision: main
+
+retrieval:
+  method: bm25
+  pool_size: 100           # BM25 top-k saved as candidates
+
+rerank:
+  depth: 20                # rerank top 20, then BM25 ranks 21..100
+  max_doc_tokens: 256      # per-model tokenizer truncation
+  batch_size: 8
+
+eval:
+  cutoff: 10               # nDCG@10, MRR@10
+  recall_cutoff: 100       # Recall@100 diagnostic
+
+runtime:
+  device: auto             # auto | mps | cpu | cuda
+  dtype: bfloat16          # bfloat16 | float16 | float32
