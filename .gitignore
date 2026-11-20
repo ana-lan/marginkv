@@ -1,0 +1,45 @@
+# .gitignore
+
+# Project data and heavy outputs (never commit)
+data/
+artifacts/
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.ckpt
+*.npy
+*.npz
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environments and secrets
+.venv/
+venv/
+.env
+.env.*
+*.token
+hf_token*
+
+# Caches and logs
+.cache/
+huggingface/
+wandb/
+logs/
+*.log
+
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
+*.swp
