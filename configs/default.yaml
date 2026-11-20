@@ -14,10 +14,10 @@ paths:                     # relative to the repo root
 models:
   qwen3:
     name: Qwen/Qwen3-Reranker-0.6B
-    revision: main         # replaced with the exact commit hash in 0.4
+    revision: "e61197ed45024b0ed8a2d74b80b4d909f1255473"
   bge:
     name: BAAI/bge-reranker-v2-m3
-    revision: main
+    revision: "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
 
 retrieval:
   method: bm25
