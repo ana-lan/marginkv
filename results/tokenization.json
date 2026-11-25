@@ -1,0 +1,274 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-25T05:19:26+00:00",
+    "git_commit": "a597a24ffc87cc527ea80ba67d6d4a0c3311dff4",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "model": {
+    "name": "Qwen/Qwen3-Reranker-0.6B",
+    "revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473"
+  },
+  "tokenizer": {
+    "class": "Qwen2Tokenizer",
+    "vocab_size": 151643
+  },
+  "instruction": "Given a web search query, retrieve relevant passages that answer the query",
+  "piece_lengths": {
+    "prefix": 39,
+    "qf_head": 21,
+    "qf_mid": 2,
+    "df_head": 20,
+    "df_mid": 4,
+    "suffix": 9
+  },
+  "datasets": {
+    "scifact": {
+      "num_queries": 300,
+      "num_pairs": 6000,
+      "num_unique_docs": 3216,
+      "doc_tokens_before_truncation": {
+        "min": 73,
+        "mean": 341.51,
+        "p50": 315,
+        "p95": 591,
+        "max": 1926
+      },
+      "docs_truncated": 2275,
+      "docs_truncated_frac": 0.7074,
+      "query_tokens_qf": {
+        "min": 5,
+        "mean": 19.74,
+        "p50": 18,
+        "p95": 36,
+        "max": 53
+      },
+      "prompt_tokens_query_first": {
+        "min": 155,
+        "mean": 333.65,
+        "p50": 342,
+        "p95": 363,
+        "max": 380
+      },
+      "prompt_tokens_doc_first": {
+        "min": 155,
+        "mean": 334.61,
+        "p50": 343,
+        "p95": 364,
+        "max": 381
+      },
+      "qf_parity": {
+        "full": {
+          "checked": 1585,
+          "matched": 1585
+        },
+        "truncated": {
+          "checked": 4415,
+          "matched": 4415
+        }
+      },
+      "qf_parity_mismatch_examples": [],
+      "df_natural_parity": {
+        "checked": 1585,
+        "matched": 14,
+        "examples": [
+          {
+            "qid": "1",
+            "doc_id": "18953920",
+            "pos": 282,
+            "ours": [
+              "\u0120stem",
+              "\u0120cell",
+              "\u0120properties",
+              ".",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "\u0120stem",
+              "\u0120cell",
+              "\u0120properties",
+              ".\u010a",
+              "<",
+              "Query"
+            ]
+          },
+          {
+            "qid": "1",
+            "doc_id": "21257564",
+            "pos": 288,
+            "ours": [
+              "\u0120in",
+              "\u0120those",
+              "\u0120regions",
+              ".",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "\u0120in",
+              "\u0120those",
+              "\u0120regions",
+              ".\u010a",
+              "<",
+              "Query"
+            ]
+          },
+          {
+            "qid": "1",
+            "doc_id": "40212412",
+            "pos": 203,
+            "ours": [
+              "ers",
+              "\u0120.",
+              "\u0120.",
+              "\u0120.",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "ers",
+              "\u0120.",
+              "\u0120.",
+              "\u0120.\u010a",
+              "<",
+              "Query"
+            ]
+          }
+        ]
+      },
+      "content_sha256": "dea889ab409901feadaf7b3ef9ab248a7c8d3f2880b72366d693f539c708054d",
+      "artifact": "artifacts/tokenized/scifact_qwen3.pt"
+    },
+    "nfcorpus": {
+      "num_queries": 323,
+      "num_pairs": 6460,
+      "num_unique_docs": 2471,
+      "doc_tokens_before_truncation": {
+        "min": 20,
+        "mean": 355.26,
+        "p50": 351,
+        "p95": 569,
+        "max": 2334
+      },
+      "docs_truncated": 1911,
+      "docs_truncated_frac": 0.7734,
+      "query_tokens_qf": {
+        "min": 2,
+        "mean": 5.84,
+        "p50": 5,
+        "p95": 12,
+        "max": 22
+      },
+      "prompt_tokens_query_first": {
+        "min": 94,
+        "mean": 318.5,
+        "p50": 331,
+        "p95": 338,
+        "max": 349
+      },
+      "prompt_tokens_doc_first": {
+        "min": 94,
+        "mean": 318.63,
+        "p50": 331,
+        "p95": 338,
+        "max": 350
+      },
+      "qf_parity": {
+        "full": {
+          "checked": 1347,
+          "matched": 1347
+        },
+        "truncated": {
+          "checked": 5113,
+          "matched": 5113
+        }
+      },
+      "qf_parity_mismatch_examples": [],
+      "df_natural_parity": {
+        "checked": 1347,
+        "matched": 9,
+        "examples": [
+          {
+            "qid": "PLAIN-2",
+            "doc_id": "MED-2428",
+            "pos": 264,
+            "ours": [
+              "\u0120proceed",
+              "\u0120with",
+              "\u0120caution",
+              ".",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "\u0120proceed",
+              "\u0120with",
+              "\u0120caution",
+              ".\u010a",
+              "<",
+              "Query"
+            ]
+          },
+          {
+            "qid": "PLAIN-2",
+            "doc_id": "MED-2427",
+            "pos": 296,
+            "ours": [
+              "-c",
+              "ancer",
+              "\u0120drugs",
+              ".",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "-c",
+              "ancer",
+              "\u0120drugs",
+              ".\u010a",
+              "<",
+              "Query"
+            ]
+          },
+          {
+            "qid": "PLAIN-2",
+            "doc_id": "MED-3204",
+            "pos": 242,
+            "ours": [
+              "\u0120avoid",
+              "\u0120an",
+              "\u0120interaction",
+              ".",
+              "\u010a",
+              "<"
+            ],
+            "ref": [
+              "\u0120avoid",
+              "\u0120an",
+              "\u0120interaction",
+              ".\u010a",
+              "<",
+              "Query"
+            ]
+          }
+        ]
+      },
+      "content_sha256": "05273f93e3e3f0279cf19f4b2ef98279b677318f925c388175f6fa3c8e1bead1",
+      "artifact": "artifacts/tokenized/nfcorpus_qwen3.pt"
+    }
+  }
+}
