@@ -1,0 +1,201 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-25T09:59:43+00:00",
+    "git_commit": "ed163bbed5d54bf4c6d02844911fc70565c157ac",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "dataset": "scifact",
+  "variant": "B",
+  "worst_n": 32,
+  "spread_n": 96,
+  "device": "mps",
+  "dtype": "bfloat16",
+  "full_self": {
+    "worst": {
+      "max": 0.1509693158569334,
+      "p99": 0.14260565191711405,
+      "p50": 4.0490722685859737e-07,
+      "mean": 0.009968139148712196
+    },
+    "spread": {
+      "max": 0.08834023052978512,
+      "p99": 0.04749383715515153,
+      "p50": 4.70001221053451e-07,
+      "mean": 0.003656370217641198
+    }
+  },
+  "cached_self": {
+    "worst": {
+      "max": 0.280301619445801,
+      "p99": 0.2786736761480716,
+      "p50": 0.1319878987426757,
+      "mean": 0.14037497178077696
+    },
+    "spread": {
+      "max": 0.10366646997070283,
+      "p99": 0.0913063161499022,
+      "p50": 0.02369185412597652,
+      "mean": 0.029470510753631603
+    }
+  },
+  "path_single": {
+    "worst": {
+      "max": 0.1410980224609375,
+      "p99": 0.13806121826171877,
+      "p50": 0.037688493728637695,
+      "mean": 0.04594668745994568
+    },
+    "spread": {
+      "max": 0.10003948211669922,
+      "p99": 0.08848447799682614,
+      "p50": 0.015666484832763672,
+      "mean": 0.021100342273712158
+    }
+  },
+  "batched_gap": {
+    "worst": {
+      "max": 0.2858919999999996,
+      "p99": 0.27683596999999976,
+      "p50": 0.15792950000000028,
+      "mean": 0.17289715625000002
+    },
+    "spread": {
+      "max": 0.10553000000000079,
+      "p99": 0.09077364999999946,
+      "p50": 0.022559999999999913,
+      "mean": 0.025968479166666687
+    }
+  },
+  "cpu_fp32_path_worst": {
+    "max": 3.7670135498046875e-05,
+    "p99": 3.5305023193359385e-05,
+    "p50": 7.62939453125e-06,
+    "mean": 8.240342140197754e-06
+  },
+  "worst_pairs": [
+    {
+      "qid": "128",
+      "doc_id": "791050",
+      "gap": 0.2858919999999996,
+      "full": -6.799247,
+      "cached": -7.085139,
+      "prefix_len": 315,
+      "new_len": 27,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1359",
+      "doc_id": "14482051",
+      "gap": 0.2566790000000001,
+      "full": -5.232239,
+      "cached": -5.488918,
+      "prefix_len": 315,
+      "new_len": 45,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1197",
+      "doc_id": "10577574",
+      "gap": 0.25648300000000024,
+      "full": -6.342023,
+      "cached": -6.598506,
+      "prefix_len": 315,
+      "new_len": 26,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1200",
+      "doc_id": "147107523",
+      "gap": 0.2356119999999997,
+      "full": -6.651488,
+      "cached": -6.415876,
+      "prefix_len": 248,
+      "new_len": 48,
+      "seam_kind": "merged",
+      "truncated": false
+    },
+    {
+      "qid": "1290",
+      "doc_id": "44048701",
+      "gap": 0.2307870000000003,
+      "full": -4.613071,
+      "cached": -4.843858,
+      "prefix_len": 315,
+      "new_len": 25,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1274",
+      "doc_id": "19661996",
+      "gap": 0.20650999999999975,
+      "full": -5.301544,
+      "cached": -5.095034,
+      "prefix_len": 277,
+      "new_len": 51,
+      "seam_kind": "merged",
+      "truncated": false
+    },
+    {
+      "qid": "674",
+      "doc_id": "18852643",
+      "gap": 0.19199199999999994,
+      "full": -6.183629,
+      "cached": -6.375621,
+      "prefix_len": 315,
+      "new_len": 24,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1110",
+      "doc_id": "20188586",
+      "gap": 0.17434100000000008,
+      "full": -6.002475,
+      "cached": -6.176816,
+      "prefix_len": 315,
+      "new_len": 22,
+      "seam_kind": "merged",
+      "truncated": true
+    },
+    {
+      "qid": "1197",
+      "doc_id": "5106691",
+      "gap": 0.17259899999999995,
+      "full": -7.807672,
+      "cached": -7.635073,
+      "prefix_len": 266,
+      "new_len": 26,
+      "seam_kind": "merged",
+      "truncated": false
+    },
+    {
+      "qid": "1196",
+      "doc_id": "11441172",
+      "gap": 0.16933799999999977,
+      "full": -5.681362,
+      "cached": -5.8507,
+      "prefix_len": 316,
+      "new_len": 25,
+      "seam_kind": "appended",
+      "truncated": true
+    }
+  ]
+}

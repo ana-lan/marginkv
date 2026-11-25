@@ -1,0 +1,135 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-25T07:24:48+00:00",
+    "git_commit": "ed163bbed5d54bf4c6d02844911fc70565c157ac",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "model": {
+    "name": "Qwen/Qwen3-Reranker-0.6B",
+    "revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473"
+  },
+  "instruction": "Given a web search query, retrieve relevant passages that answer the query",
+  "seam_piece_lengths": {
+    "df_mid_seam": 3
+  },
+  "datasets": {
+    "scifact": {
+      "num_pairs": 6000,
+      "num_unique_docs": 3216,
+      "seam_kinds": {
+        "untruncated": {
+          "merged": 933,
+          "appended": 8,
+          "fallback": 0
+        },
+        "truncated": {
+          "merged": 259,
+          "appended": 2006,
+          "fallback": 10
+        }
+      },
+      "doc_seam_tokens": {
+        "min": 73,
+        "mean": 241.34,
+        "p50": 257,
+        "p95": 257,
+        "max": 257
+      },
+      "cache_len_seam": {
+        "min": 132,
+        "mean": 300.34,
+        "p50": 316,
+        "p95": 316,
+        "max": 316
+      },
+      "prompt_tokens_doc_first_A": {
+        "min": 155,
+        "mean": 334.61,
+        "p50": 343,
+        "p95": 364,
+        "max": 381
+      },
+      "prompt_tokens_doc_first_B": {
+        "min": 154,
+        "mean": 334.26,
+        "p50": 343,
+        "p95": 363,
+        "max": 381
+      },
+      "natural_parity": {
+        "checked": 1585,
+        "matched_A": 14,
+        "matched_B": 1585,
+        "B_mismatch_examples": []
+      },
+      "content_sha256": "8e0d1ba9e5f911b7764525ad251a3d9f1584183a39552a6a6f4a34bac01538e0",
+      "artifact": "artifacts/tokenized/scifact_qwen3_df.pt"
+    },
+    "nfcorpus": {
+      "num_pairs": 6460,
+      "num_unique_docs": 2471,
+      "seam_kinds": {
+        "untruncated": {
+          "merged": 553,
+          "appended": 7,
+          "fallback": 0
+        },
+        "truncated": {
+          "merged": 325,
+          "appended": 1580,
+          "fallback": 6
+        }
+      },
+      "doc_seam_tokens": {
+        "min": 21,
+        "mean": 241.43,
+        "p50": 257,
+        "p95": 257,
+        "max": 257
+      },
+      "cache_len_seam": {
+        "min": 80,
+        "mean": 300.43,
+        "p50": 316,
+        "p95": 316,
+        "max": 316
+      },
+      "prompt_tokens_doc_first_A": {
+        "min": 94,
+        "mean": 318.63,
+        "p50": 331,
+        "p95": 338,
+        "max": 350
+      },
+      "prompt_tokens_doc_first_B": {
+        "min": 94,
+        "mean": 318.27,
+        "p50": 330,
+        "p95": 338,
+        "max": 350
+      },
+      "natural_parity": {
+        "checked": 1347,
+        "matched_A": 9,
+        "matched_B": 1347,
+        "B_mismatch_examples": []
+      },
+      "content_sha256": "db6448ba8432ca7bbd2c38468dc14d41ba86da39656eafc82def009d20a6f8ca",
+      "artifact": "artifacts/tokenized/nfcorpus_qwen3_df.pt"
+    }
+  }
+}

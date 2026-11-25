@@ -111,6 +111,44 @@ def natural_doc_first_ids(tok, instruction: str, queries: list[str], docs: list[
     return [pre + m + suf for m in tok(mids)["input_ids"]]
 
 
+SEAM = "\n"
+
+
+def seam_piece_texts() -> dict[str, str]:
+    return {"df_mid_seam": "<Query>:"}
+
+
+def seam_doc_ids(tok, doc: list[int], text: str | None = None) -> tuple[list[int], str]:
+    """Variant B doc piece. Only the last doc token may change; everything before must equal `doc`.
+
+    text given (untruncated doc): tokenize " " + text + "\n" in one call, i.e. natural tokenization.
+    text None (truncated doc): re-tokenize decode(doc) + "\n" (the truncated text plus the seam).
+    Returns (ids, kind):
+      "appended": doc + ["\n"]            (doc ends in a word, nothing to merge)
+      "merged":   doc[:-1] + [last + "\n"] (e.g. "." -> ".\n")
+      "fallback": doc + ["\n"] because re-tokenizing changed earlier tokens (counted and reported)
+    """
+    nl = encode(tok, [SEAM])[0]
+    if text is not None:
+        src = doc_piece_text(text) + SEAM
+    else:
+        src = tok.decode(doc, clean_up_tokenization_spaces=False) + SEAM
+    ids = encode(tok, [src])[0]
+    n = len(doc)
+    if len(ids) == n + 1 and ids[:n] == doc and ids[n:] == nl:
+        return ids, "appended"
+    if (len(ids) == n and ids[:-1] == doc[:-1]
+            and tok.decode(ids[-1:], clean_up_tokenization_spaces=False)
+            == tok.decode(doc[-1:], clean_up_tokenization_spaces=False) + SEAM):
+        return ids, "merged"
+    return doc + nl, "fallback"
+
+
+def doc_first_seam_ids(pieces: dict, doc_seam: list[int], q_df: list[int]) -> list[int]:
+    # pieces must include "df_mid_seam". Cacheable prefix = prefix + df_head + doc_seam.
+    return pieces["prefix"] + pieces["df_head"] + doc_seam + pieces["df_mid_seam"] + q_df + pieces["suffix"]
+
+
 def load_model(name: str, revision: str, device: torch.device, dtype: torch.dtype):
     """Pinned revision, eval mode. Attention = transformers default (sdpa)."""
     model = AutoModelForCausalLM.from_pretrained(name, revision=revision, dtype=dtype)
