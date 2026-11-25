@@ -17,8 +17,8 @@ import torch
 
 from marginkv.config import REPO_ROOT
 
-_TRACKED_PACKAGES = ["torch", "transformers", "tokenizers", "safetensors", "bm25s", "numpy"]
-
+_TRACKED_PACKAGES = ["torch", "transformers", "tokenizers", "safetensors", "huggingface_hub",
+                     "bm25s", "PyStemmer", "pytrec-eval-terrier", "numpy", "pandas"]
 
 def ensure_dir(path: str | Path) -> Path:
     path = Path(path)

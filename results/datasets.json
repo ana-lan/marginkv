@@ -1,0 +1,98 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-25T05:07:59+00:00",
+    "git_commit": "3ff2900918c5d3aac669ff0fc5d51119fb2d8958",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "datasets": {
+    "scifact": {
+      "dataset": "scifact",
+      "split": "test",
+      "num_docs": 5183,
+      "num_queries": 300,
+      "num_qrels": 339,
+      "relevance_levels": {
+        "1": 339
+      },
+      "positives_per_query_mean": 1.13,
+      "positives_per_query_min": 1,
+      "positives_per_query_max": 5,
+      "queries_without_positive": 0,
+      "qrel_docs_missing_from_corpus": 0,
+      "docs_empty_title": 0,
+      "docs_empty_text": 0,
+      "doc_words_mean": 214.6,
+      "query_words_mean": 12.5,
+      "source_repo": "mteb/scifact",
+      "source_revision": "cf10ab6856b15b0e670ef8ae5dae4e266c12d035",
+      "files_sha256": {
+        "corpus.jsonl": "f0d32db0d156b526d75921ed7a76f2cb912902631c87248c5c97c617bad0b60c",
+        "qrels/test.tsv": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c",
+        "queries.jsonl": "9db7df096f7414435d52bafcbacf814c30cea50eb565c1e8fa6d11440759bba8"
+      },
+      "bm25_queries_no_known_terms": 0,
+      "bm25_queries_no_known_terms_ids": [],
+      "bm25_queries_fewer_than_k_matches": 1
+    },
+    "nfcorpus": {
+      "dataset": "nfcorpus",
+      "split": "test",
+      "num_docs": 3633,
+      "num_queries": 323,
+      "num_qrels": 12334,
+      "relevance_levels": {
+        "1": 11758,
+        "2": 576
+      },
+      "positives_per_query_mean": 38.186,
+      "positives_per_query_min": 1,
+      "positives_per_query_max": 475,
+      "queries_without_positive": 0,
+      "qrel_docs_missing_from_corpus": 0,
+      "docs_empty_title": 0,
+      "docs_empty_text": 0,
+      "doc_words_mean": 233.8,
+      "query_words_mean": 3.3,
+      "source_repo": "mteb/nfcorpus",
+      "source_revision": "52ac3f19d3449632d9f00aab0ad34a110fc03816",
+      "files_sha256": {
+        "corpus.jsonl": "ee3db77bc2183e66b9c114e6eca4adf44de381705b1f8c94de8efdd232f0c4ff",
+        "qrels/test.tsv": "f8fba6ef3d4dd9c3a242a8ba4ae38276fc3622fce7dcbae764766d564542fd2a",
+        "queries.jsonl": "1b893f53f3f62e8f2949a6db619a9cb058e8d97901a5010e108e60c4ef5fd924"
+      },
+      "bm25_queries_no_known_terms": 15,
+      "bm25_queries_no_known_terms_ids": [
+        "PLAIN-551",
+        "PLAIN-997",
+        "PLAIN-1098",
+        "PLAIN-1214",
+        "PLAIN-1309",
+        "PLAIN-1611",
+        "PLAIN-1621",
+        "PLAIN-1679",
+        "PLAIN-1752",
+        "PLAIN-1827",
+        "PLAIN-2134",
+        "PLAIN-2209",
+        "PLAIN-2271",
+        "PLAIN-2396",
+        "PLAIN-2408"
+      ],
+      "bm25_queries_fewer_than_k_matches": 124
+    }
+  }
+}
