@@ -1,0 +1,314 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-26T20:29:53+00:00",
+    "git_commit": "366b0171b632e09b7cb092fe5c7821422ac5eeec",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "5.5",
+  "version": "marginkv-kv-v1",
+  "model_files_sha256": {
+    "model.safetensors": "706acfb28a1e67dee5bcde94b0654031528dcf8658f8c6e6c0e18a7a2050e90c"
+  },
+  "sample_per_dataset": 16,
+  "kept_files": false,
+  "datasets": {
+    "scifact": {
+      "num_docs": 3216,
+      "shared_len": 59,
+      "shared_file_bytes": 6766864,
+      "doc_tokens": {
+        "min": 73,
+        "max": 257,
+        "mean": 241.34048507462686
+      },
+      "naive_bf16_bytes_per_doc": 34445449.55223881,
+      "sample_docs": [
+        "43128141",
+        "4435369",
+        "72372925",
+        "7285256",
+        "9194077",
+        "25817686",
+        "11557602",
+        "14475235",
+        "18537148",
+        "22490293",
+        "25475802",
+        "31803596",
+        "39187170",
+        "46451940",
+        "7114092",
+        "9988425"
+      ],
+      "shared_prefix_check": {
+        "bit_identical": [
+          0,
+          16
+        ],
+        "max_rel_diff": 0.0015374510549008846,
+        "score_shift_max_abs": 0.04835700988769531,
+        "score_shift_mean": 0.01227790117263794
+      },
+      "formats": {
+        "bf16": {
+          "file_bytes_per_doc_mean": 27679193.504975125,
+          "file_mib_per_doc_mean": 26.396935944533467,
+          "header_bytes_max": 336,
+          "ratio_vs_bf16_file": 1.0,
+          "corpus_total_bytes": 89023053176,
+          "corpus_total_gib": 82.90917908400297,
+          "ratio_vs_bf16_corpus": 1.0,
+          "ratio_vs_naive_bf16": 1.2443581949609497,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 49.32376324359211,
+            "p50": 52.710729505633935,
+            "p95": 64.83978175674565
+          }
+        },
+        "fp8_tensor": {
+          "file_bytes_per_doc_mean": 13840028.226368159,
+          "file_mib_per_doc_mean": 13.198879457824859,
+          "header_bytes_max": 488,
+          "ratio_vs_bf16_file": 1.9999376484103155,
+          "corpus_total_bytes": 44516297640,
+          "corpus_total_gib": 41.45903293043375,
+          "ratio_vs_bf16_corpus": 1.9997856492002735,
+          "ratio_vs_naive_bf16": 2.4884496607476634,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 29.971291492984165,
+            "p50": 30.755686981137842,
+            "p95": 42.022479261504486
+          }
+        },
+        "fp8_head": {
+          "file_bytes_per_doc_mean": 13840812.226368159,
+          "file_mib_per_doc_mean": 13.199627138488921,
+          "header_bytes_max": 488,
+          "ratio_vs_bf16_file": 1.9998243637930033,
+          "corpus_total_bytes": 44518818984,
+          "corpus_total_gib": 41.46138111501932,
+          "ratio_vs_bf16_corpus": 1.9996723904107778,
+          "ratio_vs_naive_bf16": 2.4883087262448034,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 29.3331980574294,
+            "p50": 30.09172948077321,
+            "p95": 34.92397897935007
+          }
+        },
+        "int8_tok": {
+          "file_bytes_per_doc_mean": 14056172.355721394,
+          "file_mib_per_doc_mean": 13.405010562631029,
+          "header_bytes_max": 504,
+          "ratio_vs_bf16_file": 1.9691842704040725,
+          "corpus_total_bytes": 45211417160,
+          "corpus_total_gib": 42.106413431465626,
+          "ratio_vs_bf16_corpus": 1.969039211068163,
+          "ratio_vs_naive_bf16": 2.4501900784921116,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 28.209523388795787,
+            "p50": 29.604271025164053,
+            "p95": 35.18022927164566
+          }
+        },
+        "int4_kivi": {
+          "file_bytes_per_doc_mean": 8735255.049751244,
+          "file_mib_per_doc_mean": 8.330588388205761,
+          "header_bytes_max": 656,
+          "ratio_vs_bf16_file": 3.168676054371572,
+          "corpus_total_bytes": 28099347104,
+          "corpus_total_gib": 26.16955628991127,
+          "ratio_vs_bf16_corpus": 3.168153795407132,
+          "ratio_vs_naive_bf16": 3.9423181382115002,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 26.192382756562438,
+            "p50": 26.290750014595687,
+            "p95": 33.04133273195475
+          }
+        },
+        "int4_tok": {
+          "file_bytes_per_doc_mean": 8650298.263681592,
+          "file_mib_per_doc_mean": 8.249567283326714,
+          "header_bytes_max": 656,
+          "ratio_vs_bf16_file": 3.1997964302787842,
+          "corpus_total_bytes": 27826126080,
+          "corpus_total_gib": 25.915099382400513,
+          "ratio_vs_bf16_corpus": 3.1992614753508657,
+          "ratio_vs_naive_bf16": 3.981027234675708,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 27.996690063446295,
+            "p50": 29.148520494345576,
+            "p95": 36.66332301509101
+          }
+        }
+      }
+    },
+    "nfcorpus": {
+      "num_docs": 2471,
+      "shared_len": 59,
+      "shared_file_bytes": 6766864,
+      "doc_tokens": {
+        "min": 21,
+        "max": 257,
+        "mean": 241.42816673411573
+      },
+      "naive_bf16_bytes_per_doc": 34455505.58640227,
+      "sample_docs": [
+        "MED-5063",
+        "MED-1568",
+        "MED-1803",
+        "MED-1584",
+        "MED-2378",
+        "MED-4966",
+        "MED-1283",
+        "MED-1757",
+        "MED-2216",
+        "MED-2793",
+        "MED-3434",
+        "MED-3888",
+        "MED-4363",
+        "MED-4775",
+        "MED-5201",
+        "MED-999"
+      ],
+      "shared_prefix_check": {
+        "bit_identical": [
+          0,
+          16
+        ],
+        "max_rel_diff": 0.0015374510549008846,
+        "score_shift_max_abs": 0.030065536499023438,
+        "score_shift_mean": 0.009288609027862549
+      },
+      "formats": {
+        "bf16": {
+          "file_bytes_per_doc_mean": 27689249.492513154,
+          "file_mib_per_doc_mean": 26.406526081574587,
+          "header_bytes_max": 336,
+          "ratio_vs_bf16_file": 1.0,
+          "corpus_total_bytes": 68426902360,
+          "corpus_total_gib": 63.72751887887716,
+          "ratio_vs_bf16_corpus": 1.0,
+          "ratio_vs_naive_bf16": 1.2442409544724566,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 47.885760439385194,
+            "p50": 45.023270475212485,
+            "p95": 73.87448975350708
+          }
+        },
+        "fp8_tensor": {
+          "file_bytes_per_doc_mean": 13845056.139214892,
+          "file_mib_per_doc_mean": 13.203674449171917,
+          "header_bytes_max": 488,
+          "ratio_vs_bf16_file": 1.9999376827433595,
+          "corpus_total_bytes": 34217900584,
+          "corpus_total_gib": 31.867903269827366,
+          "ratio_vs_bf16_corpus": 1.9997399370549296,
+          "ratio_vs_naive_bf16": 2.4881583279779163,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 27.63002323990804,
+            "p50": 29.9170829821378,
+            "p95": 33.19194722280372
+          }
+        },
+        "fp8_head": {
+          "file_bytes_per_doc_mean": 13845840.139214892,
+          "file_mib_per_doc_mean": 13.20442212983598,
+          "header_bytes_max": 488,
+          "ratio_vs_bf16_file": 1.9998244392617428,
+          "corpus_total_bytes": 34219837848,
+          "corpus_total_gib": 31.869707487523556,
+          "ratio_vs_bf16_corpus": 1.999626727161691,
+          "ratio_vs_naive_bf16": 2.488017467592297,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 27.970716197160073,
+            "p50": 29.984896042151377,
+            "p95": 32.54160424694419
+          }
+        },
+        "int8_tok": {
+          "file_bytes_per_doc_mean": 14061279.07082153,
+          "file_mib_per_doc_mean": 13.409880705663232,
+          "header_bytes_max": 504,
+          "ratio_vs_bf16_file": 1.969184265033964,
+          "corpus_total_bytes": 34752187448,
+          "corpus_total_gib": 32.365496687591076,
+          "ratio_vs_bf16_corpus": 1.9689955477590517,
+          "ratio_vs_naive_bf16": 2.44990489969574,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 27.31685674007167,
+            "p50": 28.203791502164677,
+            "p95": 33.81981252459809
+          }
+        },
+        "int4_kivi": {
+          "file_bytes_per_doc_mean": 8736670.986645084,
+          "file_mib_per_doc_mean": 8.331938730855068,
+          "header_bytes_max": 656,
+          "ratio_vs_bf16_file": 3.1693135216879598,
+          "corpus_total_bytes": 21595080872,
+          "corpus_total_gib": 20.111986316740513,
+          "ratio_vs_bf16_corpus": 3.168633762734445,
+          "ratio_vs_naive_bf16": 3.942543897318357,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 31.79949480909272,
+            "p50": 29.02068750699982,
+            "p95": 61.698156263446435
+          }
+        },
+        "int4_tok": {
+          "file_bytes_per_doc_mean": 8653440.673411574,
+          "file_mib_per_doc_mean": 8.252564118777823,
+          "header_bytes_max": 656,
+          "ratio_vs_bf16_file": 3.1997965361443694,
+          "corpus_total_bytes": 21389418768,
+          "corpus_total_gib": 19.920448556542397,
+          "ratio_vs_bf16_corpus": 3.199100597458554,
+          "ratio_vs_naive_bf16": 3.980451980835237,
+          "sample_checked": 16,
+          "sample_load_ms_warm": {
+            "n": 16,
+            "mean": 31.489898432482732,
+            "p50": 29.942666471470147,
+            "p95": 53.27654148277361
+          }
+        }
+      }
+    }
+  }
+}
