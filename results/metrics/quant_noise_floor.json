@@ -1,0 +1,183 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-26T04:56:36+00:00",
+    "git_commit": "a1ed7ae682b39e6547516f93116666f8a9e65e9f",
+    "git_dirty": false,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "5.2",
+  "rules": {
+    "margin": "m_ds = max(0.002, max(|lo|,|hi|) of paired 95% bootstrap CI of nDCG@10(b16) - nDCG@10(b8))",
+    "no_measurable_loss": "95% CI of delta nDCG@10 (format - bf16 b8) inside [-m_ds, +m_ds]",
+    "within_1_point": "point delta nDCG@10 >= -0.01",
+    "loss": "otherwise",
+    "flag": "any m_ds > 0.005 -> noise floor too coarse to call small losses (flag only)",
+    "bootstrap": "percentile, 10000 paired query resamples, seed = cfg.seed"
+  },
+  "batches": [
+    8,
+    16
+  ],
+  "smoke_queries": 0,
+  "datasets": {
+    "scifact": {
+      "num_queries": 300,
+      "b8": {
+        "mean": {
+          "ndcg@10": 0.7506381351198314,
+          "mrr@10": 0.7241772486772484,
+          "recall@100": 0.9126666666666667
+        },
+        "diagnostics": {
+          "num_queries": 300,
+          "queries_with_score_ties": 0,
+          "duplicate_score_values": 0,
+          "top1_changed_frac": 0.3333,
+          "mean_abs_rank_shift": 4.4803
+        }
+      },
+      "b16": {
+        "mean": {
+          "ndcg@10": 0.750578573598006,
+          "mrr@10": 0.7241177248677246,
+          "recall@100": 0.9126666666666667
+        },
+        "diagnostics": {
+          "num_queries": 300,
+          "queries_with_score_ties": 0,
+          "duplicate_score_values": 0,
+          "top1_changed_frac": 0.3333,
+          "mean_abs_rank_shift": 4.482
+        }
+      },
+      "noise": {
+        "delta_ndcg@10": -5.95615218253485e-05,
+        "ndcg@10_ci95": [
+          -0.0001786845654760455,
+          0.0
+        ],
+        "delta_mrr@10": -5.95238095238095e-05,
+        "mrr@10_ci95": [
+          -0.0001785714285714285,
+          0.0
+        ],
+        "wlt_ndcg@10": [
+          0,
+          1,
+          299
+        ],
+        "scores": {
+          "max_abs": 0.29345599999999905,
+          "p99_abs": 0.1447714500000022,
+          "mean_abs": 0.0203383595,
+          "pair_flip_rate": 0.0036140350877192982,
+          "identical_topk_order": [
+            172,
+            300
+          ]
+        }
+      },
+      "margin": 0.002,
+      "margin_flag": false,
+      "frozen_check": {
+        "b8_vs_frozen": {
+          "max_abs": 0.0,
+          "identical_frac": 1.0
+        },
+        "b16_vs_frozen": {
+          "max_abs": 0.29345599999999905,
+          "identical_frac": 0.556
+        },
+        "frozen_ndcg@10": 0.7506381351198314
+      }
+    },
+    "nfcorpus": {
+      "num_queries": 323,
+      "b8": {
+        "mean": {
+          "ndcg@10": 0.3537528901991782,
+          "mrr@10": 0.5860152833063049,
+          "recall@100": 0.24688690577564287
+        },
+        "diagnostics": {
+          "num_queries": 323,
+          "queries_with_score_ties": 23,
+          "duplicate_score_values": 23,
+          "top1_changed_frac": 0.5913,
+          "mean_abs_rank_shift": 4.8833
+        }
+      },
+      "b16": {
+        "mean": {
+          "ndcg@10": 0.3537882941166396,
+          "mrr@10": 0.5859120841318983,
+          "recall@100": 0.24688690577564287
+        },
+        "diagnostics": {
+          "num_queries": 323,
+          "queries_with_score_ties": 20,
+          "duplicate_score_values": 20,
+          "top1_changed_frac": 0.5882,
+          "mean_abs_rank_shift": 4.8861
+        }
+      },
+      "noise": {
+        "delta_ndcg@10": 3.540391746135412e-05,
+        "ndcg@10_ci95": [
+          -0.00013071460391077497,
+          0.000241469526717318
+        ],
+        "delta_mrr@10": -0.00010319917440660481,
+        "mrr@10_ci95": [
+          -0.0003095975232198144,
+          0.0
+        ],
+        "wlt_ndcg@10": [
+          4,
+          5,
+          314
+        ],
+        "scores": {
+          "max_abs": 0.22473600000000005,
+          "p99_abs": 0.1369098900000009,
+          "mean_abs": 0.014666992414860682,
+          "pair_flip_rate": 0.003796643311064038,
+          "identical_topk_order": [
+            175,
+            323
+          ]
+        }
+      },
+      "margin": 0.002,
+      "margin_flag": false,
+      "frozen_check": {
+        "b8_vs_frozen": {
+          "max_abs": 0.0,
+          "identical_frac": 1.0
+        },
+        "b16_vs_frozen": {
+          "max_abs": 0.22473600000000005,
+          "identical_frac": 0.6496904024767802
+        },
+        "frozen_ndcg@10": 0.3537528901991782
+      }
+    }
+  },
+  "margins": {
+    "scifact": 0.002,
+    "nfcorpus": 0.002
+  }
+}
