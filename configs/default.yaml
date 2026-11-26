@@ -35,3 +35,19 @@ eval:
 runtime:
   device: auto             # auto | mps | cpu | cuda
   dtype: bfloat16          # bfloat16 | float16 | float32
+
+lora:                      # Phase 4: identical for the doc-first arm and the query-first control
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  lr: 0.0001
+  weight_decay: 0.0
+  warmup_frac: 0.05
+  epochs: 1
+  group_size: 8            # 1 positive + 7 negatives (matches the 4.1 artifact)
+  groups_per_step: 8       # 64 sequences per optimizer step
+  micro_groups: 4          # groups per forward pass on the L4; use --micro-groups 1 on the Mac
+  max_grad_norm: 1.0
+  temperature: 1.0
+  dev_every: 300

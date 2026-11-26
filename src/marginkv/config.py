@@ -61,6 +61,24 @@ class Runtime:
 
 
 @dataclass(frozen=True)
+class Lora:
+    r: int
+    alpha: int
+    dropout: float
+    target_modules: tuple[str, ...]
+    lr: float
+    weight_decay: float
+    warmup_frac: float
+    epochs: int
+    group_size: int
+    groups_per_step: int
+    micro_groups: int
+    max_grad_norm: float
+    temperature: float
+    dev_every: int
+
+
+@dataclass(frozen=True)
 class Config:
     seed: int
     datasets: tuple[str, ...]
@@ -71,6 +89,7 @@ class Config:
     rerank: Rerank
     eval: Eval
     runtime: Runtime
+    lora: Lora
 
     def to_dict(self) -> dict:
         # Round-trip through JSON so Paths become plain strings.
@@ -104,6 +123,13 @@ def _validate(cfg: Config) -> None:
         raise ValueError(f"runtime.dtype must be one of {sorted(VALID_DTYPES)}")
     if not cfg.datasets:
         raise ValueError("datasets must not be empty")
+    L = cfg.lora
+    if L.r <= 0 or L.group_size < 2 or L.groups_per_step <= 0 or L.micro_groups <= 0:
+        raise ValueError("lora: r, group_size, groups_per_step, micro_groups must be positive (group_size >= 2)")
+    if L.groups_per_step % L.micro_groups:
+        raise ValueError("lora.groups_per_step must be divisible by lora.micro_groups")
+    if not L.target_modules:
+        raise ValueError("lora.target_modules must not be empty")
 
 
 def load_config(path: str | Path | None = None) -> Config:
@@ -127,6 +153,12 @@ def load_config(path: str | Path | None = None) -> Config:
         "models",
     )
 
+    lora_raw = dict(raw["lora"])
+    lora_raw["target_modules"] = tuple(lora_raw.get("target_modules", ()))
+    for k in ("dropout", "lr", "weight_decay", "warmup_frac", "max_grad_norm", "temperature"):
+        if k in lora_raw:
+            lora_raw[k] = float(lora_raw[k])
+
     cfg = Config(
         seed=int(raw["seed"]),
         datasets=tuple(raw["datasets"]),
@@ -137,6 +169,8 @@ def load_config(path: str | Path | None = None) -> Config:
         rerank=_build(Rerank, raw["rerank"], "rerank"),
         eval=_build(Eval, raw["eval"], "eval"),
         runtime=_build(Runtime, raw["runtime"], "runtime"),
+        lora=_build(Lora, lora_raw, "lora"),
     )
+    
     _validate(cfg)
     return cfg

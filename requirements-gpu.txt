@@ -1,6 +1,4 @@
 # requirements-gpu.txt
-# RunPod L4 only (Linux, CUDA). Not installed on the Mac.
-# Pinned when each GPU phase starts:
-#   Phase 4 (only if the order gate fails): peft, plus the same torch/transformers pins as requirements.txt
-#   Phase 8: vllm, pinned to a version confirmed to support Qwen3-Reranker's yes/no path,
-#            automatic prefix caching, and --kv-cache-dtype fp8 on Ada (L4)
+# RunPod (Linux, CUDA). Same pins as the Mac; PyPI's Linux torch wheel bundles CUDA.
+# Phase 8 adds vllm below.
+-r requirements.txt

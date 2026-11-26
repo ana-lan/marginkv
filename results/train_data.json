@@ -1,0 +1,139 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-25T19:09:35+00:00",
+    "git_commit": "551cca97b58f884b705df843d2409167fcb12b87",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "source": {
+    "repo": "Tevatron/msmarco-passage",
+    "revision": "330a160b40a739d4c07d52c7ce562e2c549214c0",
+    "file": "train.jsonl.gz",
+    "size": 1726062395,
+    "sha256": "9df43ab7a970fc63e9eca68b7a3a26036221339b6d2d7619d959306f96ec3193"
+  },
+  "content_sha256": "914d9039a348e566f3ad7eb6bc3ff63997502dc911e73272840b1237d2e541e5",
+  "settings": {
+    "n_train": 12000,
+    "n_dev": 1000,
+    "group_size": 8,
+    "neg_pool": 15,
+    "parity_queries": 3000,
+    "smoke": 0,
+    "force": false
+  },
+  "stats": {
+    "rows_total": 400782,
+    "rows_parsed": 14969,
+    "drops": {
+      "leak_query": 0,
+      "leak_doc": 0,
+      "dup_query": 0,
+      "no_positive": 0,
+      "few_negatives": 36
+    },
+    "num_train": 12000,
+    "num_dev": 1000,
+    "num_passages": 101848,
+    "dev_passages_also_in_train": 236,
+    "passage_tokens_full": {
+      "n": 101848,
+      "mean": 86.28,
+      "p50": 77,
+      "p95": 153,
+      "max": 1882
+    },
+    "truncated_frac": 0.0009,
+    "query_tokens_df": {
+      "n": 13000,
+      "mean": 6.99,
+      "p50": 7,
+      "p95": 12,
+      "max": 54
+    },
+    "seq_len_qf": {
+      "n": 104000,
+      "mean": 165.07,
+      "p50": 156,
+      "p95": 233,
+      "max": 348
+    },
+    "seq_len_df": {
+      "n": 104000,
+      "mean": 164.17,
+      "p50": 155,
+      "p95": 232,
+      "max": 349
+    },
+    "seam_kind": {
+      "merged": 97161,
+      "appended": 4028,
+      "fallback": 659
+    },
+    "hardness_mean": {
+      "pos_overlap": 0.8194,
+      "neg_overlap_chosen": 0.5892,
+      "neg_overlap_all": 0.5195,
+      "max_neg_ge_pos": 0.5975
+    },
+    "parity": {
+      "pairs": 31967,
+      "query_first_match": 31967,
+      "doc_first_seam_match": 31766,
+      "doc_first_by_kind": {
+        "merged": {
+          "pairs": 30481,
+          "match": 30481
+        },
+        "appended": {
+          "pairs": 1285,
+          "match": 1285
+        },
+        "fallback": {
+          "pairs": 201,
+          "match": 0
+        }
+      },
+      "mismatch_examples": [
+        {
+          "pid": "5839157",
+          "kind": "fallback",
+          "tail": "bborn fat for under $75, check it out!)."
+        },
+        {
+          "pid": "2193874",
+          "kind": "fallback",
+          "tail": "ceed RC new line of 5th Scale GP Cars!!."
+        },
+        {
+          "pid": "7404962",
+          "kind": "fallback",
+          "tail": " a significant difference of nearly 23%."
+        },
+        {
+          "pid": "4424147",
+          "kind": "fallback",
+          "tail": "d him surrounded. There was no way out!."
+        },
+        {
+          "pid": "1876252",
+          "kind": "fallback",
+          "tail": "ison Avenue.Monroe, GA 30655.Phone: (..."
+        }
+      ]
+    }
+  }
+}

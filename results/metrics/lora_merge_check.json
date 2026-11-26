@@ -1,0 +1,91 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-26T01:23:14+00:00",
+    "git_commit": "551cca97b58f884b705df843d2409167fcb12b87",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "dataset": "scifact",
+  "num_pairs": 64,
+  "batch_size": 8,
+  "rule_original": "mean |merged bf16 - fp32 ref| <= 1.5 x mean |base bf16 - base fp32| (failed for df)",
+  "rule_used": "mean |merged bf16 - fp32 ref| <= 1.5 x mean |unmerged bf16 - fp32 ref| (amended 2026-11-25 before its data was seen: the original baseline depends on score scale)",
+  "device": "mps",
+  "arms": {
+    "qf": {
+      "base_bf16_err": {
+        "mean": 0.08593,
+        "p95": 0.19612,
+        "max": 0.26766
+      },
+      "unmerged_bf16_err": {
+        "mean": 0.0654,
+        "p95": 0.1335,
+        "max": 0.2776
+      },
+      "merged_bf16_err": {
+        "mean": 0.05134,
+        "p95": 0.11224,
+        "max": 0.14657
+      },
+      "merged_vs_unmerged_bf16": {
+        "mean": 0.07189,
+        "p95": 0.20011,
+        "max": 0.3533
+      },
+      "ratio_vs_base": 0.597,
+      "ratio_vs_unmerged": 0.785,
+      "lora_shift_fp32": {
+        "mean": 6.51466,
+        "p95": 8.83948,
+        "max": 9.69366
+      },
+      "pass_vs_base": true,
+      "pass_merge_only": true
+    },
+    "df": {
+      "base_bf16_err": {
+        "mean": 0.03174,
+        "p95": 0.08395,
+        "max": 0.11493
+      },
+      "unmerged_bf16_err": {
+        "mean": 0.05038,
+        "p95": 0.13335,
+        "max": 0.16606
+      },
+      "merged_bf16_err": {
+        "mean": 0.06207,
+        "p95": 0.15234,
+        "max": 0.22634
+      },
+      "merged_vs_unmerged_bf16": {
+        "mean": 0.0564,
+        "p95": 0.13819,
+        "max": 0.19026
+      },
+      "ratio_vs_base": 1.956,
+      "ratio_vs_unmerged": 1.232,
+      "lora_shift_fp32": {
+        "mean": 7.2606,
+        "p95": 14.36979,
+        "max": 15.7158
+      },
+      "pass_vs_base": false,
+      "pass_merge_only": true
+    }
+  }
+}
