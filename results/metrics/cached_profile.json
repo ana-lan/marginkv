@@ -1,0 +1,134 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-26T04:28:48+00:00",
+    "git_commit": "510bac18b792f86f26bedd498228a77e41cc2580",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "5.1",
+  "model_dir": "/Users/Asus/Documents/Projects/KV Cache/marginkv/artifacts/lora/df/merged",
+  "model_files_sha256": {
+    "model.safetensors": "706acfb28a1e67dee5bcde94b0654031528dcf8658f8c6e6c0e18a7a2050e90c"
+  },
+  "device": "mps",
+  "dtype": "bfloat16",
+  "threshold": 0.1,
+  "settings": {
+    "batches": 40,
+    "warmup": 3,
+    "doc_chunk": 16,
+    "score_batch": 8,
+    "build_batch": 1
+  },
+  "datasets": {
+    "scifact": {
+      "timed_batches": 40,
+      "pad_ms": {
+        "n": 40,
+        "mean": 12.220931275078328,
+        "p50": 12.13537500007078,
+        "p95": 16.59431873849826
+      },
+      "wrap_ms": {
+        "n": 40,
+        "mean": 16.701816700515337,
+        "p50": 16.704353998648003,
+        "p95": 20.88789649278624
+      },
+      "forward_ms": {
+        "n": 40,
+        "mean": 198.26694482544553,
+        "p50": 205.04266700299922,
+        "p95": 236.31171700108098
+      },
+      "parts_total_ms": {
+        "n": 40,
+        "mean": 227.1896928010392,
+        "p50": 233.6884380201809,
+        "p95": 272.3538607315277
+      },
+      "score_on_caches_ms": {
+        "n": 40,
+        "mean": 224.85535515006632,
+        "p50": 234.01795848621987,
+        "p95": 263.9014235712238
+      },
+      "build_ms_per_doc": {
+        "n": 176,
+        "mean": 157.61673321569768,
+        "p50": 158.76689599826932,
+        "p95": 168.02378099237103
+      },
+      "overhead_frac": 0.1273066027732283,
+      "ms_per_pair": 29.980714020008843,
+      "shape_mean": {
+        "B": 7.5,
+        "P": 315.825,
+        "N": 43.625
+      },
+      "split_vs_real_max_abs_log_odds": 0.0
+    },
+    "nfcorpus": {
+      "timed_batches": 40,
+      "pad_ms": {
+        "n": 40,
+        "mean": 10.201579101703828,
+        "p50": 10.231020482024178,
+        "p95": 10.929602390388027
+      },
+      "wrap_ms": {
+        "n": 40,
+        "mean": 17.95360527248704,
+        "p50": 18.13512499211356,
+        "p95": 19.31529855792178
+      },
+      "forward_ms": {
+        "n": 40,
+        "mean": 116.04155519598862,
+        "p50": 112.44020848243963,
+        "p95": 124.57784613507101
+      },
+      "parts_total_ms": {
+        "n": 40,
+        "mean": 144.1967395701795,
+        "p50": 140.9944790211739,
+        "p95": 152.83398861065507
+      },
+      "score_on_caches_ms": {
+        "n": 40,
+        "mean": 144.1772010519344,
+        "p50": 139.69510400784202,
+        "p95": 154.6003315481357
+      },
+      "build_ms_per_doc": {
+        "n": 16,
+        "mean": 166.19668486964656,
+        "p50": 165.9983335121069,
+        "p95": 170.50289574399358
+      },
+      "overhead_frac": 0.19525534667507477,
+      "ms_per_pair": 18.0221501314918,
+      "shape_mean": {
+        "B": 8.0,
+        "P": 316.0,
+        "N": 16.775
+      },
+      "split_vs_real_max_abs_log_odds": 0.0
+    }
+  },
+  "worst_overhead_frac": 0.19525534667507477,
+  "decision": "build_prepad"
+}

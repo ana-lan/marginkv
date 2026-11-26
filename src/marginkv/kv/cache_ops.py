@@ -130,3 +130,87 @@ def score_on_caches(model, kvs: list[DocKV], new_seqs: list[list[int]], device) 
     out = model.model(input_ids=ids.to(device), attention_mask=mask.to(device),
                       position_ids=pos.to(device), past_key_values=cache, use_cache=True)
     return _yes_no(model, out.last_hidden_state[:, -1, :])
+
+
+@dataclass
+class KVChunk:
+    """Several DocKVs stacked once (Phase 5.1). keys/values: [L, n_docs, H, P, D], each doc left padded
+    to P = longest doc in the chunk. Scoring slices to the batch's own longest doc before gathering,
+    so the tensors fed to the model equal what score_on_caches builds for the same batch."""
+    keys: torch.Tensor
+    values: torch.Tensor
+    n_cached: list[int]
+    next_pos: list[int]
+    shared_len: int
+
+    @property
+    def n_docs(self) -> int:
+        return self.keys.shape[1]
+
+    @property
+    def P(self) -> int:
+        return self.keys.shape[-2]
+
+    def nbytes(self) -> int:
+        return 2 * self.keys.numel() * self.keys.element_size()
+
+
+def stack_chunk(kvs: list[DocKV]) -> KVChunk:
+    """Stack DocKVs (already on their device, same dtype) into one left-padded chunk.
+    Compress each DocKV *before* stacking: padding zeros must not enter quantization statistics."""
+    if not kvs:
+        raise ValueError("need at least one DocKV")
+    k0 = kvs[0].keys[0]
+    L, H, D, dt, dev = kvs[0].num_layers, k0.shape[0], k0.shape[-1], k0.dtype, k0.device
+    for kv in kvs:
+        if kv.num_layers != L or kv.shared_len != kvs[0].shared_len:
+            raise ValueError("DocKVs differ in layers or shared_len")
+        if kv.keys[0].dtype != dt or kv.keys[0].device != dev:
+            raise ValueError("DocKVs differ in dtype or device")
+    P = max(kv.n_cached for kv in kvs)
+    keys = torch.zeros(L, len(kvs), H, P, D, dtype=dt, device=dev)
+    values = torch.zeros_like(keys)
+    for i, kv in enumerate(kvs):
+        n = kv.n_cached
+        keys[:, i, :, P - n:] = torch.stack(kv.keys)      # [L, H, n, D]
+        values[:, i, :, P - n:] = torch.stack(kv.values)
+    return KVChunk(keys, values, [kv.n_cached for kv in kvs], [kv.next_pos for kv in kvs], kvs[0].shared_len)
+
+
+@torch.inference_mode()
+def score_on_chunk(model, chunk: KVChunk, rows: list[int], new_seqs: list[list[int]], device) -> dict[str, list[float]]:
+    """Score new_seqs[b] on chunk doc rows[b]. Same result as score_on_caches on the same batch
+    (identical tensors and shapes), with two gathers instead of per-layer, per-row copies.
+    The chunk must already be on `device`; it is never modified."""
+    if not rows or len(rows) != len(new_seqs) or any(len(s) == 0 for s in new_seqs):
+        raise ValueError("need equal, non-empty lists of rows and new sequences")
+    if any(r < 0 or r >= chunk.n_docs for r in rows):
+        raise IndexError("row out of range for this chunk")
+    if chunk.keys.device.type != torch.device(device).type:
+        raise ValueError("chunk must be on the scoring device")
+    B = len(rows)
+    n_c = [chunk.n_cached[r] for r in rows]
+    P = max(n_c)                      # batch's own longest doc, same as score_on_caches
+    N = max(len(s) for s in new_seqs)
+    start = chunk.P - P               # every row's real tokens sit in the last n <= P slots
+
+    idx = torch.tensor(rows, dtype=torch.long, device=chunk.keys.device)
+    k = chunk.keys[:, :, :, start:, :].index_select(1, idx)     # [L, B, H, P, D], one contiguous copy
+    v = chunk.values[:, :, :, start:, :].index_select(1, idx)
+    cache = DynamicCache()
+    for layer in range(k.shape[0]):
+        cache.update(k[layer], v[layer], layer)
+
+    ids = torch.full((B, N), PAD_ID, dtype=torch.long)
+    mask = torch.zeros((B, P + N), dtype=torch.long)
+    pos = torch.zeros((B, N), dtype=torch.long)
+    for b, (r, s) in enumerate(zip(rows, new_seqs)):
+        m, n = len(s), chunk.n_cached[r]
+        ids[b, N - m:] = torch.tensor(s, dtype=torch.long)
+        mask[b, P - n:P] = 1
+        mask[b, P + N - m:] = 1
+        pos[b, N - m:] = torch.arange(chunk.next_pos[r], chunk.next_pos[r] + m)
+
+    out = model.model(input_ids=ids.to(device), attention_mask=mask.to(device),
+                      position_ids=pos.to(device), past_key_values=cache, use_cache=True)
+    return _yes_no(model, out.last_hidden_state[:, -1, :])

@@ -1,0 +1,101 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-26T04:42:45+00:00",
+    "git_commit": "510bac18b792f86f26bedd498228a77e41cc2580",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "5.1",
+  "model_files_sha256": {
+    "model.safetensors": "706acfb28a1e67dee5bcde94b0654031528dcf8658f8c6e6c0e18a7a2050e90c"
+  },
+  "device": "mps",
+  "dtype": "bfloat16",
+  "settings": {
+    "doc_chunk": 16,
+    "score_batch": 8,
+    "build_batch": 1,
+    "n_docs": 96,
+    "warmup": 2
+  },
+  "exact": {
+    "pairs": 12,
+    "cache_lens": [
+      141,
+      156,
+      183,
+      316,
+      316,
+      316
+    ],
+    "max_abs_diff": 0.0,
+    "exact": true
+  },
+  "timing": {
+    "scifact": {
+      "batches": 22,
+      "pairs": 164,
+      "old_ms": {
+        "n": 22,
+        "mean": 219.3271742289653,
+        "p50": 222.58754099311773,
+        "p95": 259.3552711303346
+      },
+      "new_ms": {
+        "n": 22,
+        "mean": 217.24269490964204,
+        "p50": 215.78322851564735,
+        "p95": 255.46922915964387
+      },
+      "stack_ms_per_chunk": {
+        "n": 6,
+        "mean": 35.9594026619258,
+        "p50": 35.009395505767316,
+        "p95": 40.49483324342873
+      },
+      "old_ms_per_pair": 29.421938006324613,
+      "new_ms_per_pair_incl_stack": 30.457900634046826,
+      "speedup": 0.9659870639093168,
+      "max_abs_diff": 0.0
+    },
+    "nfcorpus": {
+      "batches": 199,
+      "pairs": 1565,
+      "old_ms": {
+        "n": 199,
+        "mean": 138.0381115876611,
+        "p50": 134.97066701529548,
+        "p95": 160.75746718852312
+      },
+      "new_ms": {
+        "n": 199,
+        "mean": 140.5354903668081,
+        "p50": 138.2367080077529,
+        "p95": 169.284083385719
+      },
+      "stack_ms_per_chunk": {
+        "n": 6,
+        "mean": 36.00302066479344,
+        "p50": 35.02749949984718,
+        "p95": 39.793385498342104
+      },
+      "old_ms_per_pair": 17.55244997184956,
+      "new_ms_per_pair_incl_stack": 18.00803879040484,
+      "speedup": 0.974700808685617,
+      "max_abs_diff": 0.0
+    }
+  }
+}
