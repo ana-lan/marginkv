@@ -1,0 +1,5 @@
+# requirements-vllm.txt
+# Phase 8a: separate venv on the pod (vLLM pins its own torch; do not mix with requirements-gpu.txt).
+# Pinned to the version actually used; full environment saved to results/vllm/pip_freeze_vllm.txt.
+vllm==0.34.0
+pytrec-eval-terrier==0.5.11
