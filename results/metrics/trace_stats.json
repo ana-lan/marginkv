@@ -1,0 +1,941 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-27T01:55:08+00:00",
+    "git_commit": "ab9d40ca4fe8d68cd60d07d0ea1e0a00b4ebf55a",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "8a.1",
+  "rules": {
+    "block_size": 16,
+    "max_hit": "(n - 1) // block_size blocks",
+    "eviction": "LRU over cached full blocks, deepest block touched first",
+    "simulation": "sequential (concurrency 1), ignores blocks held by in-flight requests",
+    "caps_blocks": [
+      "2500",
+      "5000",
+      "10500",
+      "21000",
+      "inf"
+    ],
+    "caps_note": "estimated for a 4090 (about 10,500 BF16 / 21,000 FP8 blocks); rerun with measured num_gpu_blocks"
+  },
+  "settings": {
+    "seed": 42,
+    "t1_queries": 50,
+    "t2_docs": 50,
+    "per": 20
+  },
+  "datasets": {
+    "scifact": {
+      "zero_overlap_queries": 0,
+      "traces": {
+        "t1": {
+          "description": "same query, 20 docs; queries with disjoint top-20 sets (by content); query-major",
+          "selection": {
+            "queries_found": 42,
+            "queries_wanted": 50
+          },
+          "pairs_sha256": "aad1b676a094e8028420c5bfd426e8b37575c9934e713ef7f7527f1a0a457db6",
+          "prompt_len": {
+            "qf": {
+              "p50": 343.0,
+              "p95": 366.0,
+              "max": 380,
+              "mean": 336.13928571428573
+            },
+            "df": {
+              "p50": 344.0,
+              "p95": 367.0,
+              "max": 381,
+              "mean": 336.752380952381
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 303.32380952380953
+          },
+          "df_block_aligned_doc_frac": 0.956306541376798,
+          "repeats": {
+            "n_requests": 840,
+            "n_queries": 42,
+            "unique_docs_id": 840,
+            "unique_docs_content": 840,
+            "repeat_frac_id": 0.0,
+            "repeat_frac_content": 0.0,
+            "reuse_factor_id": 1.0,
+            "occurrences_per_doc_id": {
+              "1": 840
+            },
+            "max_occurrences_id": 1,
+            "reuse_distance_requests": {
+              "n": 0,
+              "p50": null,
+              "p90": null,
+              "max": null
+            },
+            "within_query_content_repeats": 0,
+            "excluding_zero_overlap": null
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 62592,
+                "prompt_tokens": 282357,
+                "hit_frac": 0.22167681339580744,
+                "doc_tokens_reused_frac": 8.794344259491785e-05,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 10802,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 62592,
+                "prompt_tokens": 282357,
+                "hit_frac": 0.22167681339580744,
+                "doc_tokens_reused_frac": 8.794344259491785e-05,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 8302,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 62592,
+                "prompt_tokens": 282357,
+                "hit_frac": 0.22167681339580744,
+                "doc_tokens_reused_frac": 8.794344259491785e-05,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 2802,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 62592,
+                "prompt_tokens": 282357,
+                "hit_frac": 0.22167681339580744,
+                "doc_tokens_reused_frac": 8.794344259491785e-05,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 0,
+                "cached_blocks_end": 13302
+              },
+              "inf": {
+                "hit_tokens": 62592,
+                "prompt_tokens": 282357,
+                "hit_frac": 0.22167681339580744,
+                "doc_tokens_reused_frac": 8.794344259491785e-05,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 0,
+                "cached_blocks_end": 13302
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 40352,
+                "prompt_tokens": 282872,
+                "hit_frac": 0.14265109307389914,
+                "doc_tokens_reused_frac": 0.00012181336243860607,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 12220,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 40368,
+                "prompt_tokens": 282872,
+                "hit_frac": 0.14270765575949546,
+                "doc_tokens_reused_frac": 0.00014617603492632727,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 9719,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 40368,
+                "prompt_tokens": 282872,
+                "hit_frac": 0.14270765575949546,
+                "doc_tokens_reused_frac": 0.00014617603492632727,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 4219,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 40368,
+                "prompt_tokens": 282872,
+                "hit_frac": 0.14270765575949546,
+                "doc_tokens_reused_frac": 0.00014617603492632727,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 0,
+                "cached_blocks_end": 14719
+              },
+              "inf": {
+                "hit_tokens": 40368,
+                "prompt_tokens": 282872,
+                "hit_frac": 0.14270765575949546,
+                "doc_tokens_reused_frac": 0.00014617603492632727,
+                "requests_with_hit_frac": 0.9988095238095238,
+                "evictions": 0,
+                "cached_blocks_end": 14719
+              }
+            }
+          }
+        },
+        "t2": {
+          "description": "same doc, 20 seeded queries; distinct-content docs; doc-major",
+          "selection": {
+            "docs_found": 50,
+            "docs_wanted": 50
+          },
+          "pairs_sha256": "03f39ecd1604bf153e52c331bb3f659ddc7e7cb88f07243c40b71786c20e4353",
+          "prompt_len": {
+            "qf": {
+              "p50": 342.0,
+              "p95": 360.0,
+              "max": 380,
+              "mean": 328.262
+            },
+            "df": {
+              "p50": 343.0,
+              "p95": 361.0,
+              "max": 381,
+              "mean": 328.857
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 297.42
+          },
+          "df_block_aligned_doc_frac": 0.9529686747130605,
+          "repeats": {
+            "n_requests": 1000,
+            "n_queries": 292,
+            "unique_docs_id": 50,
+            "unique_docs_content": 50,
+            "repeat_frac_id": 0.95,
+            "repeat_frac_content": 0.95,
+            "reuse_factor_id": 20.0,
+            "occurrences_per_doc_id": {
+              "11+": 50
+            },
+            "max_occurrences_id": 20,
+            "reuse_distance_requests": {
+              "n": 950,
+              "p50": 1.0,
+              "p90": 1.0,
+              "max": 1
+            },
+            "within_query_content_repeats": 0,
+            "excluding_zero_overlap": null
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 57824,
+                "prompt_tokens": 328262,
+                "hit_frac": 0.1761519761653801,
+                "doc_tokens_reused_frac": 4.205568172260072e-06,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 13932,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 62896,
+                "prompt_tokens": 328262,
+                "hit_frac": 0.19160304878420287,
+                "doc_tokens_reused_frac": 4.205568172260072e-06,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 11115,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 66032,
+                "prompt_tokens": 328262,
+                "hit_frac": 0.20115639336871158,
+                "doc_tokens_reused_frac": 4.205568172260072e-06,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 5419,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 66592,
+                "prompt_tokens": 328262,
+                "hit_frac": 0.2028623477588024,
+                "doc_tokens_reused_frac": 4.205568172260072e-06,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 15884
+              },
+              "inf": {
+                "hit_tokens": 66592,
+                "prompt_tokens": 328262,
+                "hit_frac": 0.2028623477588024,
+                "doc_tokens_reused_frac": 4.205568172260072e-06,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 15884
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 277264,
+                "prompt_tokens": 328857,
+                "hit_frac": 0.8431141803276196,
+                "doc_tokens_reused_frac": 0.9158753460280178,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 252,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 277264,
+                "prompt_tokens": 328857,
+                "hit_frac": 0.8431141803276196,
+                "doc_tokens_reused_frac": 0.9158753460280178,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 2752
+              },
+              "10500": {
+                "hit_tokens": 277264,
+                "prompt_tokens": 328857,
+                "hit_frac": 0.8431141803276196,
+                "doc_tokens_reused_frac": 0.9158753460280178,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 2752
+              },
+              "21000": {
+                "hit_tokens": 277264,
+                "prompt_tokens": 328857,
+                "hit_frac": 0.8431141803276196,
+                "doc_tokens_reused_frac": 0.9158753460280178,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 2752
+              },
+              "inf": {
+                "hit_tokens": 277264,
+                "prompt_tokens": 328857,
+                "hit_frac": 0.8431141803276196,
+                "doc_tokens_reused_frac": 0.9158753460280178,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 2752
+              }
+            }
+          }
+        },
+        "t3": {
+          "description": "real BEIR stream: queries in file order x 20 rerank candidates in BM25 rank order",
+          "selection": {},
+          "pairs_sha256": "b58592b05a3754c53e64eb8b5bbeaae1d04d544b7a722928042032ce68e6c456",
+          "prompt_len": {
+            "qf": {
+              "p50": 342.0,
+              "p95": 363.0,
+              "max": 380,
+              "mean": 333.6526666666667
+            },
+            "df": {
+              "p50": 343.0,
+              "p95": 363.0,
+              "max": 381,
+              "mean": 334.2605
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 302.5638333333333
+          },
+          "df_block_aligned_doc_frac": 0.9561922970741775,
+          "repeats": {
+            "n_requests": 6000,
+            "n_queries": 300,
+            "unique_docs_id": 3216,
+            "unique_docs_content": 3216,
+            "repeat_frac_id": 0.46399999999999997,
+            "repeat_frac_content": 0.46399999999999997,
+            "reuse_factor_id": 1.8656716417910448,
+            "occurrences_per_doc_id": {
+              "1": 1617,
+              "2": 890,
+              "3-5": 660,
+              "6-10": 49
+            },
+            "max_occurrences_id": 9,
+            "reuse_distance_requests": {
+              "n": 2784,
+              "p50": 974.5,
+              "p90": 3323.0,
+              "max": 5850
+            },
+            "within_query_content_repeats": 0,
+            "excluding_zero_overlap": null
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 436160,
+                "prompt_tokens": 2001916,
+                "hit_frac": 0.2178712793144168,
+                "doc_tokens_reused_frac": 6.106530831805557e-05,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 92613,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 436160,
+                "prompt_tokens": 2001916,
+                "hit_frac": 0.2178712793144168,
+                "doc_tokens_reused_frac": 6.106530831805557e-05,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 90113,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 436160,
+                "prompt_tokens": 2001916,
+                "hit_frac": 0.2178712793144168,
+                "doc_tokens_reused_frac": 6.106530831805557e-05,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 84613,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 436160,
+                "prompt_tokens": 2001916,
+                "hit_frac": 0.2178712793144168,
+                "doc_tokens_reused_frac": 6.106530831805557e-05,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 74113,
+                "cached_blocks_end": 21000
+              },
+              "inf": {
+                "hit_tokens": 436160,
+                "prompt_tokens": 2001916,
+                "hit_frac": 0.2178712793144168,
+                "doc_tokens_reused_frac": 6.106530831805557e-05,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 0,
+                "cached_blocks_end": 95113
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 454864,
+                "prompt_tokens": 2005563,
+                "hit_frac": 0.2268011525940596,
+                "doc_tokens_reused_frac": 0.10738731735623036,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 91579,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 491584,
+                "prompt_tokens": 2005563,
+                "hit_frac": 0.24511022590664067,
+                "doc_tokens_reused_frac": 0.13134407612514995,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 86784,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 584624,
+                "prompt_tokens": 2005563,
+                "hit_frac": 0.2915011894415683,
+                "doc_tokens_reused_frac": 0.1920885900547632,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 75469,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 724784,
+                "prompt_tokens": 2005563,
+                "hit_frac": 0.36138680260854433,
+                "doc_tokens_reused_frac": 0.28360121884543615,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 56209,
+                "cached_blocks_end": 21000
+              },
+              "inf": {
+                "hit_tokens": 983696,
+                "prompt_tokens": 2005563,
+                "hit_frac": 0.49048371953411585,
+                "doc_tokens_reused_frac": 0.4528915417792598,
+                "requests_with_hit_frac": 0.9998333333333334,
+                "evictions": 0,
+                "cached_blocks_end": 61027
+              }
+            }
+          }
+        }
+      }
+    },
+    "nfcorpus": {
+      "zero_overlap_queries": 15,
+      "traces": {
+        "t1": {
+          "description": "same query, 20 docs; queries with disjoint top-20 sets (by content); query-major",
+          "selection": {
+            "queries_found": 26,
+            "queries_wanted": 50
+          },
+          "pairs_sha256": "7bf6a316b081cf7524dfbe21932285324b7b9ed8560d4a76b7ac236d309e791c",
+          "prompt_len": {
+            "qf": {
+              "p50": 331.0,
+              "p95": 339.0,
+              "max": 340,
+              "mean": 316.3192307692308
+            },
+            "df": {
+              "p50": 331.0,
+              "p95": 339.0,
+              "max": 340,
+              "mean": 316.0615384615385
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 297.8692307692308
+          },
+          "df_block_aligned_doc_frac": 0.9537967509169496,
+          "repeats": {
+            "n_requests": 520,
+            "n_queries": 26,
+            "unique_docs_id": 520,
+            "unique_docs_content": 520,
+            "repeat_frac_id": 0.0,
+            "repeat_frac_content": 0.0,
+            "reuse_factor_id": 1.0,
+            "occurrences_per_doc_id": {
+              "1": 520
+            },
+            "max_occurrences_id": 1,
+            "reuse_distance_requests": {
+              "n": 0,
+              "p50": null,
+              "p90": null,
+              "max": null
+            },
+            "within_query_content_repeats": 0,
+            "excluding_zero_overlap": null
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 32832,
+                "prompt_tokens": 164486,
+                "hit_frac": 0.19960361368140753,
+                "doc_tokens_reused_frac": 5.650355972426263e-05,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 5462,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 32832,
+                "prompt_tokens": 164486,
+                "hit_frac": 0.19960361368140753,
+                "doc_tokens_reused_frac": 5.650355972426263e-05,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 2962,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 32832,
+                "prompt_tokens": 164486,
+                "hit_frac": 0.19960361368140753,
+                "doc_tokens_reused_frac": 5.650355972426263e-05,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 7962
+              },
+              "21000": {
+                "hit_tokens": 32832,
+                "prompt_tokens": 164486,
+                "hit_frac": 0.19960361368140753,
+                "doc_tokens_reused_frac": 5.650355972426263e-05,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 7962
+              },
+              "inf": {
+                "hit_tokens": 32832,
+                "prompt_tokens": 164486,
+                "hit_frac": 0.19960361368140753,
+                "doc_tokens_reused_frac": 5.650355972426263e-05,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 7962
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 24960,
+                "prompt_tokens": 164352,
+                "hit_frac": 0.15186915887850466,
+                "doc_tokens_reused_frac": 0.00012076127910346826,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 5935,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 24976,
+                "prompt_tokens": 164352,
+                "hit_frac": 0.1519665109034268,
+                "doc_tokens_reused_frac": 0.00016101503880462434,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 3434,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 24976,
+                "prompt_tokens": 164352,
+                "hit_frac": 0.1519665109034268,
+                "doc_tokens_reused_frac": 0.00016101503880462434,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 8434
+              },
+              "21000": {
+                "hit_tokens": 24976,
+                "prompt_tokens": 164352,
+                "hit_frac": 0.1519665109034268,
+                "doc_tokens_reused_frac": 0.00016101503880462434,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 8434
+              },
+              "inf": {
+                "hit_tokens": 24976,
+                "prompt_tokens": 164352,
+                "hit_frac": 0.1519665109034268,
+                "doc_tokens_reused_frac": 0.00016101503880462434,
+                "requests_with_hit_frac": 0.9980769230769231,
+                "evictions": 0,
+                "cached_blocks_end": 8434
+              }
+            }
+          }
+        },
+        "t2": {
+          "description": "same doc, 20 seeded queries; distinct-content docs; doc-major",
+          "selection": {
+            "docs_found": 50,
+            "docs_wanted": 50
+          },
+          "pairs_sha256": "74eb7bbc94983947ddab50f61ff417f007268e2bb482a298d4bb51f28577db72",
+          "prompt_len": {
+            "qf": {
+              "p50": 330.0,
+              "p95": 337.04999999999995,
+              "max": 349,
+              "mean": 311.414
+            },
+            "df": {
+              "p50": 330.0,
+              "p95": 338.0,
+              "max": 350,
+              "mean": 311.173
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 294.42
+          },
+          "df_block_aligned_doc_frac": 0.9537942883682271,
+          "repeats": {
+            "n_requests": 1000,
+            "n_queries": 310,
+            "unique_docs_id": 50,
+            "unique_docs_content": 50,
+            "repeat_frac_id": 0.95,
+            "repeat_frac_content": 0.95,
+            "reuse_factor_id": 20.0,
+            "occurrences_per_doc_id": {
+              "11+": 50
+            },
+            "max_occurrences_id": 20,
+            "reuse_distance_requests": {
+              "n": 950,
+              "p50": 1.0,
+              "p90": 1.0,
+              "max": 1
+            },
+            "within_query_content_repeats": 0,
+            "excluding_zero_overlap": {
+              "zero_overlap_queries": 15,
+              "n_requests": 956,
+              "repeat_frac_id": 0.9476987447698745,
+              "repeat_frac_content": 0.9476987447698745
+            }
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 53808,
+                "prompt_tokens": 311414,
+                "hit_frac": 0.17278606613703945,
+                "doc_tokens_reused_frac": 0.0,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 13054,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 56704,
+                "prompt_tokens": 311414,
+                "hit_frac": 0.18208558382089438,
+                "doc_tokens_reused_frac": 0.0,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 10373,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 58784,
+                "prompt_tokens": 311414,
+                "hit_frac": 0.18876479541703328,
+                "doc_tokens_reused_frac": 0.0,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 4743,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 59104,
+                "prompt_tokens": 311414,
+                "hit_frac": 0.18979236643182387,
+                "doc_tokens_reused_frac": 0.0,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 15223
+              },
+              "inf": {
+                "hit_tokens": 59104,
+                "prompt_tokens": 311414,
+                "hit_frac": 0.18979236643182387,
+                "doc_tokens_reused_frac": 0.0,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 15223
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 273760,
+                "prompt_tokens": 311173,
+                "hit_frac": 0.8797678461820274,
+                "doc_tokens_reused_frac": 0.9138815733582534,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 1795
+              },
+              "5000": {
+                "hit_tokens": 273760,
+                "prompt_tokens": 311173,
+                "hit_frac": 0.8797678461820274,
+                "doc_tokens_reused_frac": 0.9138815733582534,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 1795
+              },
+              "10500": {
+                "hit_tokens": 273760,
+                "prompt_tokens": 311173,
+                "hit_frac": 0.8797678461820274,
+                "doc_tokens_reused_frac": 0.9138815733582534,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 1795
+              },
+              "21000": {
+                "hit_tokens": 273760,
+                "prompt_tokens": 311173,
+                "hit_frac": 0.8797678461820274,
+                "doc_tokens_reused_frac": 0.9138815733582534,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 1795
+              },
+              "inf": {
+                "hit_tokens": 273760,
+                "prompt_tokens": 311173,
+                "hit_frac": 0.8797678461820274,
+                "doc_tokens_reused_frac": 0.9138815733582534,
+                "requests_with_hit_frac": 0.999,
+                "evictions": 0,
+                "cached_blocks_end": 1795
+              }
+            }
+          }
+        },
+        "t3": {
+          "description": "real BEIR stream: queries in file order x 20 rerank candidates in BM25 rank order",
+          "selection": {},
+          "pairs_sha256": "fa90a16c911ca7878a51db2af5aba2aa1e15c10226ab7396aacda4e4db6c9d29",
+          "prompt_len": {
+            "qf": {
+              "p50": 331.0,
+              "p95": 338.0,
+              "max": 349,
+              "mean": 318.50201238390093
+            },
+            "df": {
+              "p50": 330.0,
+              "p95": 338.0,
+              "max": 350,
+              "mean": 318.2747678018576
+            }
+          },
+          "df_cache_len": {
+            "p50": 316.0,
+            "p95": 316.0,
+            "max": 316,
+            "mean": 301.30572755417955
+          },
+          "df_block_aligned_doc_frac": 0.9526963323389344,
+          "repeats": {
+            "n_requests": 6460,
+            "n_queries": 323,
+            "unique_docs_id": 2471,
+            "unique_docs_content": 2440,
+            "repeat_frac_id": 0.6174922600619195,
+            "repeat_frac_content": 0.6222910216718267,
+            "reuse_factor_id": 2.614326183731283,
+            "occurrences_per_doc_id": {
+              "1": 1079,
+              "11+": 21,
+              "2": 692,
+              "3-5": 632,
+              "6-10": 47
+            },
+            "max_occurrences_id": 93,
+            "reuse_distance_requests": {
+              "n": 4020,
+              "p50": 440.0,
+              "p90": 3306.2999999999997,
+              "max": 6289
+            },
+            "within_query_content_repeats": 63,
+            "excluding_zero_overlap": {
+              "zero_overlap_queries": 15,
+              "n_requests": 6160,
+              "repeat_frac_id": 0.599025974025974,
+              "repeat_frac_content": 0.6040584415584416
+            }
+          },
+          "sim": {
+            "qf": {
+              "2500": {
+                "hit_tokens": 424384,
+                "prompt_tokens": 2057523,
+                "hit_frac": 0.20625966271093932,
+                "doc_tokens_reused_frac": 0.009826133800683217,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 95877,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 424384,
+                "prompt_tokens": 2057523,
+                "hit_frac": 0.20625966271093932,
+                "doc_tokens_reused_frac": 0.009826133800683217,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 93377,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 424384,
+                "prompt_tokens": 2057523,
+                "hit_frac": 0.20625966271093932,
+                "doc_tokens_reused_frac": 0.009826133800683217,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 87877,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 424384,
+                "prompt_tokens": 2057523,
+                "hit_frac": 0.20625966271093932,
+                "doc_tokens_reused_frac": 0.009826133800683217,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 77377,
+                "cached_blocks_end": 21000
+              },
+              "inf": {
+                "hit_tokens": 424416,
+                "prompt_tokens": 2057523,
+                "hit_frac": 0.20627521539248894,
+                "doc_tokens_reused_frac": 0.009826133800683217,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 0,
+                "cached_blocks_end": 98375
+              }
+            },
+            "df": {
+              "2500": {
+                "hit_tokens": 729360,
+                "prompt_tokens": 2056055,
+                "hit_frac": 0.3547375921363971,
+                "doc_tokens_reused_frac": 0.25503307683216264,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 76806,
+                "cached_blocks_end": 2500
+              },
+              "5000": {
+                "hit_tokens": 791888,
+                "prompt_tokens": 2056055,
+                "hit_frac": 0.38514922995736983,
+                "doc_tokens_reused_frac": 0.2930923563928844,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 70398,
+                "cached_blocks_end": 5000
+              },
+              "10500": {
+                "hit_tokens": 917568,
+                "prompt_tokens": 2056055,
+                "hit_frac": 0.44627599942608537,
+                "doc_tokens_reused_frac": 0.3695424824074695,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 57043,
+                "cached_blocks_end": 10500
+              },
+              "21000": {
+                "hit_tokens": 1106112,
+                "prompt_tokens": 2056055,
+                "hit_frac": 0.5379778264686499,
+                "doc_tokens_reused_frac": 0.48441348116489225,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 34759,
+                "cached_blocks_end": 21000
+              },
+              "inf": {
+                "hit_tokens": 1293792,
+                "prompt_tokens": 2056055,
+                "hit_frac": 0.6292594312895327,
+                "doc_tokens_reused_frac": 0.5988455850175206,
+                "requests_with_hit_frac": 0.99984520123839,
+                "evictions": 0,
+                "cached_blocks_end": 44029
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
