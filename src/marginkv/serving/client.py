@@ -18,7 +18,8 @@ _LABEL = re.compile(r'(\w+)="([^"]*)"')
 
 
 def new_session(concurrency=16):
-    conn = aiohttp.TCPConnector(limit=max(64, 2 * concurrency))
+    # keepalive below uvicorn's 5 s idle timeout, so a pooled connection the server already closed is never reused
+    conn = aiohttp.TCPConnector(limit=max(64, 2 * concurrency), keepalive_timeout=3)
     return aiohttp.ClientSession(connector=conn, timeout=aiohttp.ClientTimeout(total=None, sock_read=900))
 
 
@@ -133,20 +134,28 @@ def _parse(body):
             "prompt_tokens": usage.get("prompt_tokens")}
 
 
-async def complete(session, base, ids, model, logprobs, seed):
+async def complete(session, base, ids, model, logprobs, seed, retries=3):
     payload = {"model": model, "prompt": ids, "max_tokens": 1, "temperature": 1.0, "seed": seed,
                "logprobs": logprobs, "allowed_token_ids": [NO_ID, YES_ID], "return_tokens_as_token_ids": True}
-    t0 = time.perf_counter()
-    async with session.post(f"{base}/v1/completions", json=payload) as r:
-        status = r.status
-        body = await r.json(content_type=None)
+    for attempt in range(retries):
+        t0 = time.perf_counter()  # latency = the successful attempt only; retries are counted
+        try:
+            async with session.post(f"{base}/v1/completions", json=payload) as r:
+                status = r.status
+                body = await r.json(content_type=None)
+            break
+        except (aiohttp.ServerDisconnectedError, aiohttp.ClientOSError):
+            if attempt == retries - 1:
+                raise
+            await asyncio.sleep(0.05)
     lat = (time.perf_counter() - t0) * 1000.0
     if status != 200:
         return {"lp_yes": None, "lp_no": None, "cached": None, "prompt_tokens": None,
-                "latency_ms": lat, "error": str(body)[:500]}
+                "latency_ms": lat, "error": str(body)[:500], "retries": attempt}
     out = _parse(body)
     out["latency_ms"] = lat
     out["error"] = None
+    out["retries"] = attempt
     return out
 
 

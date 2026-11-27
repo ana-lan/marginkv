@@ -20,5 +20,5 @@ exec vllm serve "$MODEL" "${MODEL_REV[@]}" \
   --tokenizer "$BASE" --tokenizer-revision "$REV" \
   --served-model-name marginkv --dtype bfloat16 --kv-cache-dtype "$KV" \
   --enable-prefix-caching --max-model-len 512 --gpu-memory-utilization 0.90 \
-  --seed "$SEED" --max-logprobs 20 --logprobs-mode "$LOGPROBS_MODE" \
-  --enable-prompt-tokens-details --port "$PORT"
+  --seed "$SEED" --max-logprobs "${MAX_LOGPROBS:-20}" --logprobs-mode "$LOGPROBS_MODE" \
+  --enable-prompt-tokens-details --generation-config vllm --generation-config vllm --port "$PORT"
