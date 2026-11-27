@@ -1,0 +1,335 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-27T03:03:48+00:00",
+    "git_commit": "b6936eb141cfc8c08506768ad4a3481f151d342e",
+    "git_dirty": true,
+    "python": "3.12.3",
+    "platform": "Linux x86_64",
+    "packages": {
+      "torch": "2.14.0",
+      "transformers": "5.22.2",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.5.0",
+      "bm25s": null,
+      "PyStemmer": null,
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.3.5",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "8a",
+  "setting": "df_fp8",
+  "server": {
+    "version": "0.34.0",
+    "model_id": "marginkv",
+    "model_root": "/workspace/marginkv/artifacts/lora/df/merged",
+    "max_model_len": 512,
+    "cache_config": {
+      "_block_size_resolved": "True",
+      "_extensible_kv_cache_resolved": "True",
+      "block_size": "64",
+      "cache_dtype": "fp8",
+      "cache_hit_alignment_tokens": "None",
+      "effective_attention_block_size": "64",
+      "enable_extensible_kv_cache": "True",
+      "enable_mamba_shared_prefix_checkpoint": "False",
+      "enable_prefix_caching": "True",
+      "engine": "0",
+      "gpu_memory_utilization": "0.9",
+      "hash_block_size": "None",
+      "is_attention_free": "False",
+      "kv_cache_dtype_skip_layers": "[]",
+      "kv_cache_layout": "None",
+      "kv_cache_max_concurrency": "666.0",
+      "kv_cache_memory_bytes": "None",
+      "kv_cache_size_tokens": "340992",
+      "kv_offloading_backend": "native",
+      "kv_offloading_size": "None",
+      "kv_sharing_fast_prefill": "False",
+      "mamba_block_size": "None",
+      "mamba_cache_dtype": "auto",
+      "mamba_cache_mode": "none",
+      "mamba_page_size_padded": "None",
+      "mamba_ssm_cache_dtype": "auto",
+      "num_cpu_blocks": "None",
+      "num_gpu_blocks": "5328",
+      "num_gpu_blocks_override": "None",
+      "prefix_cache_retention_interval": "0",
+      "prefix_caching_hash_algo": "sha256",
+      "prefix_match_unit": "None",
+      "replayssm_buffer_len": "16",
+      "simple_cpu_offload_num_blocks": "None",
+      "skip_page_size_padded": "None",
+      "sliding_window": "None",
+      "swa_bounded_replay": "True",
+      "use_kda_recoverssm": "False",
+      "use_replayssm": "False",
+      "user_specified_block_size": "False"
+    }
+  },
+  "logprobs": 2,
+  "logprobs_mode": "processed_logprobs",
+  "rules": {
+    "G1_yes_no_path": "blocking: every gate request returns logprobs for both yes (9693) and no (2152); pass = 100% of requests",
+    "G2_score_agreement": "diagnostic, not blocking: per order on the 256-pair subset, mean |vLLM bf16 - HF fp32| vs mean |HF MPS bf16 - HF fp32| (full prompt); report ratio, max, pair flip rate, tie count; flag if ratio > 2.0 (vLLM computes yes/no logits in bf16, ours in fp32)",
+    "G3_prefix_cache": "blocking: on doc-first probes (same doc, two different queries, prefix cache reset before each probe), the second request's reported cached tokens >= floor(cache_len / 16) * 16 (block-aligned doc prefix) on every probe; first request after reset reports 0. Exact agreement with the 8a.1 simulator rule is recorded separately (validates the simulation, not the gate)"
+  },
+  "G1": {
+    "n": 256,
+    "missing": 0,
+    "errors": 0,
+    "first_error": null,
+    "pass": true
+  },
+  "G2": {
+    "vllm_vs_fp32": {
+      "mean": 0.27461383140693546,
+      "p95": 0.6644764144733415,
+      "max": 1.1741918325292318,
+      "n": 256
+    },
+    "hf_bf16_vs_fp32": {
+      "mean": 0.053210516502380366,
+      "p95": 0.12872142729187042,
+      "max": 0.18963193164062497,
+      "n": 256
+    },
+    "ratio": 5.160893925821048,
+    "flag_ratio_gt_2": true,
+    "pair_flip_rate_vs_fp32": {
+      "vllm": 0.027901785714285716,
+      "hf_bf16": 0.0033482142857142855
+    },
+    "tie_groups": {
+      "vllm": 2,
+      "hf_bf16": 1,
+      "groups": 32
+    },
+    "per_dataset": {
+      "scifact": {
+        "vllm_vs_fp32": {
+          "mean": 0.2573032501205623,
+          "p95": 0.6590649132092947,
+          "max": 1.1741918325292318,
+          "n": 128
+        },
+        "hf_bf16_vs_fp32": {
+          "mean": 0.055046745897293095,
+          "p95": 0.1261504940826409,
+          "max": 0.18963193164062497,
+          "n": 128
+        }
+      },
+      "nfcorpus": {
+        "vllm_vs_fp32": {
+          "mean": 0.2919244126933086,
+          "p95": 0.6582601383336565,
+          "max": 1.0237197875976562,
+          "n": 128
+        },
+        "hf_bf16_vs_fp32": {
+          "mean": 0.05137428710746764,
+          "p95": 0.13284166636352462,
+          "max": 0.1770529697265637,
+          "n": 128
+        }
+      }
+    }
+  },
+  "G3": {
+    "probes": [
+      {
+        "dataset": "scifact",
+        "doc": "20155713",
+        "queries": [
+          "237",
+          "300"
+        ],
+        "cache_len": 223,
+        "len_b": 277,
+        "a_cached": 0,
+        "b_cached": 192,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 192.0,
+        "usage_cached_reported": true,
+        "min_expected": 208,
+        "sim_expected": 224
+      },
+      {
+        "dataset": "scifact",
+        "doc": "27686445",
+        "queries": [
+          "729",
+          "421"
+        ],
+        "cache_len": 316,
+        "len_b": 348,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "scifact",
+        "doc": "3446400",
+        "queries": [
+          "967",
+          "544"
+        ],
+        "cache_len": 246,
+        "len_b": 277,
+        "a_cached": 0,
+        "b_cached": 192,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 192.0,
+        "usage_cached_reported": true,
+        "min_expected": 240,
+        "sim_expected": 240
+      },
+      {
+        "dataset": "scifact",
+        "doc": "1982286",
+        "queries": [
+          "275",
+          "1100"
+        ],
+        "cache_len": 311,
+        "len_b": 329,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "scifact",
+        "doc": "10039688",
+        "queries": [
+          "1352",
+          "1319"
+        ],
+        "cache_len": 247,
+        "len_b": 273,
+        "a_cached": 0,
+        "b_cached": 192,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 192.0,
+        "usage_cached_reported": true,
+        "min_expected": 240,
+        "sim_expected": 240
+      },
+      {
+        "dataset": "nfcorpus",
+        "doc": "MED-1148",
+        "queries": [
+          "PLAIN-1485",
+          "PLAIN-1897"
+        ],
+        "cache_len": 316,
+        "len_b": 332,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "nfcorpus",
+        "doc": "MED-329",
+        "queries": [
+          "PLAIN-1008",
+          "PLAIN-2375"
+        ],
+        "cache_len": 316,
+        "len_b": 330,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "nfcorpus",
+        "doc": "MED-721",
+        "queries": [
+          "PLAIN-751",
+          "PLAIN-2145"
+        ],
+        "cache_len": 316,
+        "len_b": 334,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "nfcorpus",
+        "doc": "MED-2220",
+        "queries": [
+          "PLAIN-1161",
+          "PLAIN-1762"
+        ],
+        "cache_len": 316,
+        "len_b": 337,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      },
+      {
+        "dataset": "nfcorpus",
+        "doc": "MED-4789",
+        "queries": [
+          "PLAIN-2261",
+          "PLAIN-3231"
+        ],
+        "cache_len": 316,
+        "len_b": 334,
+        "a_cached": 0,
+        "b_cached": 256,
+        "a_metric_hits": 0.0,
+        "b_metric_hits": 256.0,
+        "usage_cached_reported": true,
+        "min_expected": 304,
+        "sim_expected": 304
+      }
+    ],
+    "pass": false,
+    "matches_simulator_rule": false,
+    "usage_cached_reported": true
+  },
+  "blocking_pass": false,
+  "server_log_lines": [
+    "setting=df_fp8 model=/workspace/marginkv/artifacts/lora/df/merged kv=fp8 logprobs_mode=processed_logprobs seed=42",
+    "(APIServer pid=4232) INFO 11-27 03:01:44 [startup.py:96] non-default args: {'model_tag': '/workspace/marginkv/artifacts/lora/df/merged', 'enable_prompt_tokens_details': True, 'model': '/workspace/marginkv/artifacts/lora/df/merged', 'tokenizer': 'Qwen/Qwen3-Reranker-0.6B', 'dtype': 'bfloat16', 'seed': 42, 'tokenizer_revision': 'e61197ed45024b0ed8a2d74b80b4d909f1255473', 'max_model_len': 512, 'max_l",
+    "(APIServer pid=4232) INFO 11-27 03:01:44 [cache.py:519] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor",
+    "(EngineCore pid=4483) INFO 11-27 03:01:57 [core.py:153] Initializing a V1 LLM engine (v0.34.0) with config: model='/workspace/marginkv/artifacts/lora/df/merged', speculative_config=None, tokenizer='/workspace/.cache/huggingface/hub/models--Qwen--Qwen3-Reranker-0.6B/snapshots/e61197ed45024b0ed8a2d74b80b4d909f1255473', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision",
+    "(EngineCore pid=4483) INFO 11-27 03:01:59 [parallel_state.py:1935] world_size=1 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_133679fbea1541b8bf956630dfa187d3 backend=nccl",
+    "(EngineCore pid=4483) INFO 11-27 03:02:01 [cuda.py:549] Using FLASHINFER attention backend out of potential backends: ['FLASHINFER', 'TRITON_ATTN'].",
+    "(EngineCore pid=4483) INFO 11-27 03:02:10 [backends.py:1110] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/b30fceb461/rank_0_0/backbone for vLLM's torch.compile",
+    "(EngineCore pid=4483) INFO 11-27 03:02:10 [backends.py:1167] [backbone] Dynamo bytecode transform time: 5.84 s",
+    "(EngineCore pid=4483) INFO 11-27 03:02:21 [backends.py:421] [backbone] Compiling a graph for compile range (1, 2048) takes 10.66 s",
+    "(EngineCore pid=4483) INFO 11-27 03:02:25 [backends.py:952] collected artifacts: 29 entries, 3 artifacts, 5928109 bytes total",
+    "(EngineCore pid=4483) INFO 11-27 03:02:39 [flashinfer.py:1110] FlashInfer resolved query dtypes: prefill=torch.bfloat16, decode=torch.bfloat16, decode_backend=flashinfer-native, kv_cache_dtype=torch.float8_e4m3fn, arch=sm89",
+    "2026-11-27 03:02:40,431 - INFO - core.py:635 - flashinfer.jit: Building JIT module batch_prefill_with_kv_cache_dtype_q_bf16_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_128_head_dim_vo_128_posenc_0_use_swa_False_use_logits_cap_False_f16qk_False_kv_stride_equal; this can take several minutes on first use.",
+    "(EngineCore pid=4483) INFO 11-27 03:03:37 [kv_cache_utils.py:1168] GPU KV cache size: 340,992 tokens, Maximum concurrency for 512 tokens per request: 666.00x",
+    "(APIServer pid=4232) INFO 11-27 03:03:38 [factories.py:105] Scale-out endpoints are disabled. Restart vllm serve with --enable-scale-out to enable them.",
+    "(APIServer pid=4232) INFO 11-27 03:03:38 [launcher.py:197] Route: /scale_elastic_ep, Methods: POST"
+  ]
+}

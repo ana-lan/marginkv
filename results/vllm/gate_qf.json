@@ -1,0 +1,154 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-27T02:52:28+00:00",
+    "git_commit": "b6936eb141cfc8c08506768ad4a3481f151d342e",
+    "git_dirty": true,
+    "python": "3.12.3",
+    "platform": "Linux x86_64",
+    "packages": {
+      "torch": "2.14.0",
+      "transformers": "5.22.2",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.5.0",
+      "bm25s": null,
+      "PyStemmer": null,
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.3.5",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "8a",
+  "setting": "qf",
+  "server": {
+    "version": "0.34.0",
+    "model_id": "marginkv",
+    "model_root": "Qwen/Qwen3-Reranker-0.6B",
+    "max_model_len": 512,
+    "cache_config": {
+      "_block_size_resolved": "True",
+      "_extensible_kv_cache_resolved": "True",
+      "block_size": "64",
+      "cache_dtype": "auto",
+      "cache_hit_alignment_tokens": "None",
+      "effective_attention_block_size": "64",
+      "enable_extensible_kv_cache": "True",
+      "enable_mamba_shared_prefix_checkpoint": "False",
+      "enable_prefix_caching": "True",
+      "engine": "0",
+      "gpu_memory_utilization": "0.9",
+      "hash_block_size": "None",
+      "is_attention_free": "False",
+      "kv_cache_dtype_skip_layers": "[]",
+      "kv_cache_layout": "None",
+      "kv_cache_max_concurrency": "347.0",
+      "kv_cache_memory_bytes": "None",
+      "kv_cache_size_tokens": "177664",
+      "kv_offloading_backend": "native",
+      "kv_offloading_size": "None",
+      "kv_sharing_fast_prefill": "False",
+      "mamba_block_size": "None",
+      "mamba_cache_dtype": "auto",
+      "mamba_cache_mode": "none",
+      "mamba_page_size_padded": "None",
+      "mamba_ssm_cache_dtype": "auto",
+      "num_cpu_blocks": "None",
+      "num_gpu_blocks": "2776",
+      "num_gpu_blocks_override": "None",
+      "prefix_cache_retention_interval": "0",
+      "prefix_caching_hash_algo": "sha256",
+      "prefix_match_unit": "None",
+      "replayssm_buffer_len": "16",
+      "simple_cpu_offload_num_blocks": "None",
+      "skip_page_size_padded": "None",
+      "sliding_window": "None",
+      "swa_bounded_replay": "True",
+      "use_kda_recoverssm": "False",
+      "use_replayssm": "False",
+      "user_specified_block_size": "False"
+    }
+  },
+  "logprobs": 2,
+  "logprobs_mode": "processed_logprobs",
+  "rules": {
+    "G1_yes_no_path": "blocking: every gate request returns logprobs for both yes (9693) and no (2152); pass = 100% of requests",
+    "G2_score_agreement": "diagnostic, not blocking: per order on the 256-pair subset, mean |vLLM bf16 - HF fp32| vs mean |HF MPS bf16 - HF fp32| (full prompt); report ratio, max, pair flip rate, tie count; flag if ratio > 2.0 (vLLM computes yes/no logits in bf16, ours in fp32)",
+    "G3_prefix_cache": "blocking: on doc-first probes (same doc, two different queries, prefix cache reset before each probe), the second request's reported cached tokens >= floor(cache_len / 16) * 16 (block-aligned doc prefix) on every probe; first request after reset reports 0. Exact agreement with the 8a.1 simulator rule is recorded separately (validates the simulation, not the gate)"
+  },
+  "G1": {
+    "n": 256,
+    "missing": 0,
+    "errors": 0,
+    "first_error": null,
+    "pass": true
+  },
+  "G2": {
+    "vllm_vs_fp32": {
+      "mean": 0.05172412451225217,
+      "p95": 0.12849576488952152,
+      "max": 0.20918269455432892,
+      "n": 256
+    },
+    "hf_bf16_vs_fp32": {
+      "mean": 0.08495644539403915,
+      "p95": 0.20442785050964307,
+      "max": 0.3611335618896483,
+      "n": 256
+    },
+    "ratio": 0.6088310812952318,
+    "flag_ratio_gt_2": false,
+    "pair_flip_rate_vs_fp32": {
+      "vllm": 0.004464285714285714,
+      "hf_bf16": 0.002232142857142857
+    },
+    "tie_groups": {
+      "vllm": 3,
+      "hf_bf16": 1,
+      "groups": 32
+    },
+    "per_dataset": {
+      "scifact": {
+        "vllm_vs_fp32": {
+          "mean": 0.049020260774184976,
+          "p95": 0.1183252029819414,
+          "max": 0.18456757627427578,
+          "n": 128
+        },
+        "hf_bf16_vs_fp32": {
+          "mean": 0.08699164172673231,
+          "p95": 0.2087447155990597,
+          "max": 0.3611335618896483,
+          "n": 128
+        }
+      },
+      "nfcorpus": {
+        "vllm_vs_fp32": {
+          "mean": 0.05442798825031936,
+          "p95": 0.1303881957370322,
+          "max": 0.20918269455432892,
+          "n": 128
+        },
+        "hf_bf16_vs_fp32": {
+          "mean": 0.08292124906134601,
+          "p95": 0.18500347179260254,
+          "max": 0.32085814984130856,
+          "n": 128
+        }
+      }
+    }
+  },
+  "G3": null,
+  "blocking_pass": true,
+  "server_log_lines": [
+    "(EngineCore pid=3853) INFO 11-27 02:51:15 [core.py:153] Initializing a V1 LLM engine (v0.34.0) with config: model='/workspace/.cache/huggingface/hub/models--Qwen--Qwen3-Reranker-0.6B/snapshots/e61197ed45024b0ed8a2d74b80b4d909f1255473', speculative_config=None, tokenizer='/workspace/.cache/huggingface/hub/models--Qwen--Qwen3-Reranker-0.6B/snapshots/e61197ed45024b0ed8a2d74b80b4d909f1255473', skip_to",
+    "(EngineCore pid=3853) INFO 11-27 02:51:17 [parallel_state.py:1935] world_size=1 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_e5e0242dd68c4d7e91ed347cc03e5dbb backend=nccl",
+    "(EngineCore pid=3853) INFO 11-27 02:51:19 [cuda.py:549] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].",
+    "(EngineCore pid=3853) INFO 11-27 02:51:27 [backends.py:1110] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/acd6256c1d/rank_0_0/backbone for vLLM's torch.compile",
+    "(EngineCore pid=3853) INFO 11-27 02:51:27 [backends.py:1167] [backbone] Dynamo bytecode transform time: 5.87 s",
+    "(EngineCore pid=3853) INFO 11-27 02:51:38 [backends.py:421] [backbone] Compiling a graph for compile range (1, 2048) takes 10.67 s",
+    "(EngineCore pid=3853) INFO 11-27 02:51:43 [backends.py:952] collected artifacts: 29 entries, 3 artifacts, 5928333 bytes total",
+    "(EngineCore pid=3853) INFO 11-27 02:52:22 [kv_cache_utils.py:1168] GPU KV cache size: 177,664 tokens, Maximum concurrency for 512 tokens per request: 347.00x",
+    "(APIServer pid=3604) INFO 11-27 02:52:22 [factories.py:105] Scale-out endpoints are disabled. Restart vllm serve with --enable-scale-out to enable them.",
+    "(APIServer pid=3604) INFO 11-27 02:52:23 [launcher.py:197] Route: /scale_elastic_ep, Methods: POST"
+  ]
+}
