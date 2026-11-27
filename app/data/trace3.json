@@ -1,7 +1,7 @@
 {
  "provenance": {
-  "exported_utc": "2026-11-27T05:49:04+00:00",
-  "export_git_commit": "7afa421705e3062b3aa26f36ed9dcf77666fcc91",
+  "exported_utc": "2026-11-27T06:36:59+00:00",
+  "export_git_commit": "558ee2f0a586e2efdc5d0f6d7803e955e33f3990",
   "export_git_dirty": true,
   "sources": [
    {
@@ -50,6 +50,8 @@
    "repeat_frac_content": 0.46399999999999997,
    "reuse_distance_p50": 974.5,
    "reuse_distance_p90": 3323.0,
+   "prompt_len_df_mean": 334.2605,
+   "df_cache_len_mean": 302.5638333333333,
    "occurrences_per_doc": {
     "1": 1617,
     "2": 890,
@@ -110,6 +112,8 @@
    "repeat_frac_content": 0.6222910216718267,
    "reuse_distance_p50": 440.0,
    "reuse_distance_p90": 3306.2999999999997,
+   "prompt_len_df_mean": 318.2747678018576,
+   "df_cache_len_mean": 301.30572755417955,
    "occurrences_per_doc": {
     "1": 1079,
     "11+": 21,
