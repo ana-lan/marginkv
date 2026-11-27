@@ -243,6 +243,8 @@ def export_trace3(vllm, trace_stats, datasets):
                 "c16_p50_ms": h["c16_p50_ms"],
                 "c16_p95_ms": h["c16_p95_ms"],
             }
+        t3full = trace_stats["datasets"][ds]["traces"]["t3"]
+        t3 = t3full["repeats"]
         out[ds] = {
             "label": DS_LABEL[ds],
             "n_requests": t3["n_requests"],
@@ -252,6 +254,8 @@ def export_trace3(vllm, trace_stats, datasets):
             "repeat_frac_content": rep["repeat_frac_content"],
             "reuse_distance_p50": rep["reuse_distance_requests"]["p50"],
             "reuse_distance_p90": rep["reuse_distance_requests"]["p90"],
+            "prompt_len_df_mean": t3full["prompt_len"]["df"]["mean"],
+            "df_cache_len_mean": t3full["df_cache_len"]["mean"],
             "occurrences_per_doc": t3["occurrences_per_doc_id"],
             "by_setting": by_setting,
         }
