@@ -6,8 +6,8 @@ of that doc chunk's pairs with score_on_caches, cut into batches of the config's
 Pair order is fixed: docs in doc_order (sorted ids), each doc's queries in query_order. Every config
 sees the same pairs in the same batches (for a given score_batch), so configs differ only in the KV.
 
-configs: {name: (transform, score_batch)}, transform(DocKV) -> DocKV (must not modify its input).
-state is plain lists/dicts so it can be saved with save_pt and resumed per chunk.
+configs: {name: (transform, score_batch)}, transform(DocKV) -> DocKV, or transform(DocKV, doc_id) -> DocKV
+if transform.wants_doc is True (Phase 6 pruning). Transforms must not modify their input.
 """
 from __future__ import annotations
 
@@ -66,7 +66,7 @@ def run_sweep(model, art, dfart, device, configs: dict, *, qids=None, doc_chunk:
         news = [co.split_doc_first(pieces, dfart["doc_seam"][d], art["query_df"][q], "B")[1] for d, q in pairs]
 
         for name, (fn, sb) in configs.items():
-            kvs = {d: fn(base[d]) for d in cd}
+            kvs = {d: (fn(base[d], d) if getattr(fn, "wants_doc", False) else fn(base[d])) for d in cd}
             if on_doc is not None:
                 for d in cd:
                     on_doc(state, name, d, base[d], kvs[d])
