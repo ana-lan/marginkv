@@ -1,8 +1,8 @@
 {
  "provenance": {
-  "exported_utc": "2026-11-27T06:36:59+00:00",
-  "export_git_commit": "558ee2f0a586e2efdc5d0f6d7803e955e33f3990",
-  "export_git_dirty": true,
+  "exported_utc": "2026-11-27T06:42:21+00:00",
+  "export_git_commit": "87af9a343b253927f2733ee264af04a1a70b2721",
+  "export_git_dirty": false,
   "sources": [
    {
     "path": "results/metrics/quant.json",
