@@ -42,4 +42,6 @@ logs/
 .DS_Store
 .vscode/
 .idea/
-*.swpresults/vllm/runs/
+*.swp
+
+results/vllm/runs/
