@@ -1,16 +1,36 @@
-// app/app/page.tsx  (placeholder; replaced in 9b.2)
-import overview from "@/data/overview.json";
+// app/app/page.tsx
+import Limitations from "@/components/Limitations";
+import Overview from "@/components/Overview";
+import Provenance from "@/components/Provenance";
+import ThemeToggle from "@/components/ThemeToggle";
+import { REPO } from "@/lib/format";
+
+const NAV = [
+  { id: "overview", label: "Overview" },
+  { id: "limitations", label: "Limitations" },
+];
 
 export default function Home() {
-  const df = overview.systems.find((s) => s.id === "lora_dfB")!;
   return (
     <main className="wrap">
-      <h1>MarginKV</h1>
-      <p>Results explorer coming soon.</p>
-      <p className="muted">
-        Doc-first LoRA nDCG@10 on SciFact: {df.by_ds.scifact.ndcg10.toFixed(4)} (data export{" "}
-        {overview.provenance.export_git_commit.slice(0, 7)})
-      </p>
+      <header className="top">
+        <div className="brand">
+          <h1>MarginKV</h1>
+          <p className="tag">Storage-efficient KV cache reuse for decoder-only reranking</p>
+        </div>
+        <nav>
+          {NAV.map((n) => (
+            <a key={n.id} href={`#${n.id}`}>
+              {n.label}
+            </a>
+          ))}
+          <a href={REPO}>GitHub</a>
+          <ThemeToggle />
+        </nav>
+      </header>
+      <Overview />
+      <Limitations />
+      <Provenance />
     </main>
   );
 }
