@@ -4,11 +4,13 @@ import Overview from "@/components/Overview";
 import Provenance from "@/components/Provenance";
 import ThemeToggle from "@/components/ThemeToggle";
 import QuantPareto from "@/components/QuantPareto";
+import StorageCalc from "@/components/StorageCalc";
 import { REPO } from "@/lib/format";
 
 const NAV = [
   { id: "overview", label: "Overview" },
   { id: "quant", label: "Quantization" },
+  { id: "storage", label: "Storage" },
   { id: "limitations", label: "Limitations" },
 ];
 
@@ -32,6 +34,7 @@ export default function Home() {
       </header>
       <Overview />
       <QuantPareto />
+      <StorageCalc />
       <Limitations />
       <Provenance />
     </main>
