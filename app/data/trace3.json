@@ -1,0 +1,166 @@
+{
+ "provenance": {
+  "exported_utc": "2026-11-27T05:27:55+00:00",
+  "export_git_commit": "cb3210246fdde851b9707f86ef75858607ef0dce",
+  "export_git_dirty": true,
+  "sources": [
+   {
+    "path": "results/metrics/vllm.json",
+    "sha256": "dffca9770f9904d8c869988fa767e4e5e571ec80b17d017128406356049eb5ed",
+    "git_commit": "b6936eb141cfc8c08506768ad4a3481f151d342e",
+    "timestamp_utc": "2026-11-27T04:15:18+00:00"
+   },
+   {
+    "path": "results/metrics/trace_stats.json",
+    "sha256": "92350d83cdcf430ec3b863ee31d878b4fdb880ec7f04ad0794bfce220e5dbf55",
+    "git_commit": "ab9d40ca4fe8d68cd60d07d0ea1e0a00b4ebf55a",
+    "timestamp_utc": "2026-11-27T01:55:08+00:00"
+   }
+  ]
+ },
+ "vllm_version": "0.34.0",
+ "block_size": 64,
+ "settings": [
+  {
+   "id": "qf",
+   "label": "Query-first (original model)",
+   "kv_cache_tokens": 177664,
+   "num_gpu_blocks": 2776
+  },
+  {
+   "id": "df",
+   "label": "Doc-first, BF16 KV",
+   "kv_cache_tokens": 177664,
+   "num_gpu_blocks": 2776
+  },
+  {
+   "id": "df_fp8",
+   "label": "Doc-first, FP8 KV",
+   "kv_cache_tokens": 340992,
+   "num_gpu_blocks": 5328
+  }
+ ],
+ "datasets": {
+  "scifact": {
+   "label": "SciFact",
+   "n_requests": 6000,
+   "n_queries": 300,
+   "unique_docs": 3216,
+   "repeat_frac_id": 0.46399999999999997,
+   "repeat_frac_content": 0.46399999999999997,
+   "reuse_distance_p50": 974.5,
+   "reuse_distance_p90": 3323.0,
+   "occurrences_per_doc": {
+    "1": 1617,
+    "2": 890,
+    "3-5": 660,
+    "6-10": 49
+   },
+   "by_setting": {
+    "qf": {
+     "hit_frac": 0.18318450924014792,
+     "doc_tokens_reused_frac": 0.0,
+     "sim_cold_hit_frac": 0.18318450924014792,
+     "sim_abs_err_c1_cold": 0.0,
+     "sim_unbounded_hit_frac": 0.18318450924014792,
+     "sim_unbounded_doc_frac": 0.0,
+     "realized_vs_unbounded": 1.0,
+     "ndcg10": 0.756063088000749,
+     "c1_p50_ms": 17.3535774811171,
+     "c16_req_per_s": 356.7199019341505,
+     "c16_p50_ms": 43.76284749014303,
+     "c16_p95_ms": 46.11734753125348
+    },
+    "df": {
+     "hit_frac": 0.1593328157729276,
+     "doc_tokens_reused_frac": 0.16862862097068326,
+     "sim_cold_hit_frac": 0.15952428320626177,
+     "sim_abs_err_c1_cold": 0.0,
+     "sim_unbounded_hit_frac": 0.3649050166960599,
+     "sim_unbounded_doc_frac": 0.3844064150191976,
+     "realized_vs_unbounded": 0.4366418889374727,
+     "ndcg10": 0.7506720317327196,
+     "c1_p50_ms": 15.644068014808,
+     "c16_req_per_s": 320.71453326711213,
+     "c16_p50_ms": 44.24383747391403,
+     "c16_p95_ms": 78.31153952865861
+    },
+    "df_fp8": {
+     "hit_frac": 0.2252614353176639,
+     "doc_tokens_reused_frac": 0.23746341650340808,
+     "sim_cold_hit_frac": 0.2256762814232213,
+     "sim_abs_err_c1_cold": 6.382247777805827e-05,
+     "sim_unbounded_hit_frac": 0.3649050166960599,
+     "sim_unbounded_doc_frac": 0.3844064150191976,
+     "realized_vs_unbounded": 0.6173152601661566,
+     "ndcg10": 0.7475838161072966,
+     "c1_p50_ms": 15.729808015748858,
+     "c16_req_per_s": 292.0961293016212,
+     "c16_p50_ms": 45.93493597349152,
+     "c16_p95_ms": 86.46615347242914
+    }
+   }
+  },
+  "nfcorpus": {
+   "label": "NFCorpus",
+   "n_requests": 6460,
+   "n_queries": 323,
+   "unique_docs": 2471,
+   "repeat_frac_id": 0.6174922600619195,
+   "repeat_frac_content": 0.6222910216718267,
+   "reuse_distance_p50": 440.0,
+   "reuse_distance_p90": 3306.2999999999997,
+   "occurrences_per_doc": {
+    "1": 1079,
+    "11+": 21,
+    "2": 692,
+    "3-5": 632,
+    "6-10": 47
+   },
+   "by_setting": {
+    "qf": {
+     "hit_frac": 0.19817226830514167,
+     "doc_tokens_reused_frac": 0.009399523297993841,
+     "sim_cold_hit_frac": 0.19817226830514167,
+     "sim_abs_err_c1_cold": 0.0,
+     "sim_unbounded_hit_frac": 0.19823447903134012,
+     "sim_unbounded_doc_frac": 0.009399523297993841,
+     "realized_vs_unbounded": 0.999686176055233,
+     "ndcg10": 0.3490330853701599,
+     "c1_p50_ms": 15.847619506530464,
+     "c16_req_per_s": 241.38579261036097,
+     "c16_p50_ms": 70.9554780041799,
+     "c16_p95_ms": 93.48328306805342
+    },
+    "df": {
+     "hit_frac": 0.28634253461118503,
+     "doc_tokens_reused_frac": 0.2855314812862751,
+     "sim_cold_hit_frac": 0.28646704489909075,
+     "sim_abs_err_c1_cold": 3.1127571976430346e-05,
+     "sim_unbounded_hit_frac": 0.49097519278423973,
+     "sim_unbounded_doc_frac": 0.490501151540125,
+     "realized_vs_unbounded": 0.5832118176630952,
+     "ndcg10": 0.35485830921865275,
+     "c1_p50_ms": 15.697930008172989,
+     "c16_req_per_s": 274.7368354996773,
+     "c16_p50_ms": 52.44921502890065,
+     "c16_p95_ms": 89.95572908315806
+    },
+    "df_fp8": {
+     "hit_frac": 0.3692041312124432,
+     "doc_tokens_reused_frac": 0.36819321597526344,
+     "sim_cold_hit_frac": 0.36970217236406616,
+     "sim_abs_err_c1_cold": 3.1127571976430346e-05,
+     "sim_unbounded_hit_frac": 0.49097519278423973,
+     "sim_unbounded_doc_frac": 0.490501151540125,
+     "realized_vs_unbounded": 0.7519812337538831,
+     "ndcg10": 0.354259136928142,
+     "c1_p50_ms": 16.142559004947543,
+     "c16_req_per_s": 222.13945235981066,
+     "c16_p50_ms": 72.3539850441739,
+     "c16_p95_ms": 96.86467745341359
+    }
+   }
+  }
+ }
+}

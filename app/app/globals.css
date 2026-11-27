@@ -1,0 +1,15 @@
+/* app/app/globals.css  (minimal; real styling in 9b.2) */
+:root {
+    --fg: #1d1f23;
+    --muted: #5f6670;
+    --bg: #fbfaf7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 20px; }
+  .muted { color: var(--muted); }

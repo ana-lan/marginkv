@@ -1,0 +1,164 @@
+{
+ "provenance": {
+  "exported_utc": "2026-11-27T05:27:55+00:00",
+  "export_git_commit": "cb3210246fdde851b9707f86ef75858607ef0dce",
+  "export_git_dirty": true,
+  "sources": [
+   {
+    "path": "results/metrics/lora.json",
+    "sha256": "1d4456dfd4795a1f6640778e5c27a58ede6ef9a95dd7a4c93ee0b09cfebbfcd2",
+    "git_commit": "551cca97b58f884b705df843d2409167fcb12b87",
+    "timestamp_utc": "2026-11-26T01:26:17+00:00"
+   }
+  ]
+ },
+ "datasets": [
+  {
+   "id": "scifact",
+   "label": "SciFact",
+   "num_queries": 300
+  },
+  {
+   "id": "nfcorpus",
+   "label": "NFCorpus",
+   "num_queries": 323
+  }
+ ],
+ "systems": [
+  {
+   "id": "bm25",
+   "label": "BM25",
+   "note": "first stage, top 100",
+   "by_ds": {
+    "scifact": {
+     "ndcg10": 0.6790938361008704,
+     "mrr10": 0.6431388888888889
+    },
+    "nfcorpus": {
+     "ndcg10": 0.3187395686578371,
+     "mrr10": 0.5245085753599684
+    }
+   }
+  },
+  {
+   "id": "qwen3_qf",
+   "label": "Original query-first",
+   "note": "Qwen3-Reranker-0.6B as released",
+   "by_ds": {
+    "scifact": {
+     "ndcg10": 0.7555045424553959,
+     "mrr10": 0.7345410052910052
+    },
+    "nfcorpus": {
+     "ndcg10": 0.3485173799176173,
+     "mrr10": 0.5661924418890364
+    }
+   }
+  },
+  {
+   "id": "lora_qf",
+   "label": "Query-first LoRA (control)",
+   "note": "same MS MARCO training, original order",
+   "by_ds": {
+    "scifact": {
+     "ndcg10": 0.7616593025780775,
+     "mrr10": 0.739562169312169
+    },
+    "nfcorpus": {
+     "ndcg10": 0.3503642875898519,
+     "mrr10": 0.5721263944174162
+    }
+   }
+  },
+  {
+   "id": "qwen3_dfB_zs",
+   "label": "Doc-first zero-shot",
+   "note": "document first, no training",
+   "by_ds": {
+    "scifact": {
+     "ndcg10": 0.2855368307686701,
+     "mrr10": 0.22185317460317477
+    },
+    "nfcorpus": {
+     "ndcg10": 0.23502635892034623,
+     "mrr10": 0.37053049289891393
+    }
+   }
+  },
+  {
+   "id": "lora_dfB",
+   "label": "Doc-first LoRA",
+   "note": "document first, KV reusable across queries",
+   "by_ds": {
+    "scifact": {
+     "ndcg10": 0.7504070569800759,
+     "mrr10": 0.7238994708994706
+    },
+    "nfcorpus": {
+     "ndcg10": 0.35430824682508616,
+     "mrr10": 0.5878691827608236
+    }
+   }
+  }
+ ],
+ "order_gate": {
+  "scifact": {
+   "d_ndcg10": -0.011252245598001795,
+   "ndcg10_ci": [
+    -0.02400580657255456,
+    0.001133375387148679
+   ],
+   "d_mrr10": -0.015662698412698413,
+   "wlt_ndcg10": [
+    27,
+    34,
+    239
+   ],
+   "threshold": 0.01,
+   "pass": false
+  },
+  "nfcorpus": {
+   "d_ndcg10": 0.0039439592352342534,
+   "ndcg10_ci": [
+    -0.0016487536393676604,
+    0.009625413601272037
+   ],
+   "d_mrr10": 0.01574278834340754,
+   "wlt_ndcg10": [
+    76,
+    62,
+    185
+   ],
+   "threshold": 0.01,
+   "pass": true
+  }
+ },
+ "dfB_vs_orig_qf": {
+  "scifact": {
+   "d_ndcg10": -0.005097485475320135,
+   "ndcg10_ci": [
+    -0.019025772749241037,
+    0.007830241616185512
+   ],
+   "d_mrr10": -0.010641534391534391,
+   "wlt_ndcg10": [
+    29,
+    29,
+    242
+   ]
+  },
+  "nfcorpus": {
+   "d_ndcg10": 0.0057908669074687455,
+   "ndcg10_ci": [
+    0.00031805150143573584,
+    0.011798155891053319
+   ],
+   "d_mrr10": 0.021676740871787312,
+   "wlt_ndcg10": [
+    78,
+    58,
+    187
+   ]
+  }
+ }
+}

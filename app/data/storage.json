@@ -1,0 +1,149 @@
+{
+ "provenance": {
+  "exported_utc": "2026-11-27T05:27:55+00:00",
+  "export_git_commit": "cb3210246fdde851b9707f86ef75858607ef0dce",
+  "export_git_dirty": true,
+  "sources": [
+   {
+    "path": "results/metrics/storage.json",
+    "sha256": "a9f16e44881cb7d4588b9d40355dc89bcadc9aea2cdf1824a48311154f39f490",
+    "git_commit": "366b0171b632e09b7cb092fe5c7821422ac5eeec",
+    "timestamp_utc": "2026-11-26T20:29:53+00:00"
+   }
+  ]
+ },
+ "shared_len": 59,
+ "shared_file_bytes": 6766864,
+ "group": 32,
+ "size_model": "bytes_per_doc = a + b * tokens + c * ceil(tokens / group)",
+ "bf16_bytes_per_token_theory": 114688,
+ "fit_grid": {
+  "min": 1,
+  "max": 512,
+  "points": 70
+ },
+ "formats": [
+  {
+   "id": "bf16",
+   "label": "BF16",
+   "a_bytes": 330.0431579376085,
+   "b_bytes_per_token": 114688.04141674782,
+   "c_bytes_per_group": -0.7740695465570129,
+   "fit_max_rel_err": 8.095528257908719e-05,
+   "fit_max_rel_err_n_ge_64": 4.285471972349967e-07
+  },
+  {
+   "id": "fp8_tensor",
+   "label": "FP8 per-tensor",
+   "a_bytes": 591.4853038128597,
+   "b_bytes_per_token": 57344.04111239622,
+   "c_bytes_per_group": -0.5836547953577765,
+   "fit_max_rel_err": 0.00011985156424728374,
+   "fit_max_rel_err_n_ge_64": 4.7367234871279355e-07
+  },
+  {
+   "id": "fp8_head",
+   "label": "FP8 per-head",
+   "a_bytes": 1375.4853038142073,
+   "b_bytes_per_token": 57344.041112396204,
+   "c_bytes_per_group": -0.5836547952870855,
+   "fit_max_rel_err": 0.00011825114823423132,
+   "fit_max_rel_err_n_ge_64": 4.7363555854956417e-07
+  },
+  {
+   "id": "int8_tok",
+   "label": "INT8 per-token",
+   "a_bytes": 488.46499786242384,
+   "b_bytes_per_token": 58240.06115561299,
+   "c_bytes_per_group": -0.6476437623843412,
+   "fit_max_rel_err": 0.00027044743345523844,
+   "fit_max_rel_err_n_ge_64": 8.271983108961704e-07
+  },
+  {
+   "id": "int4_kivi",
+   "label": "INT4 KIVI",
+   "a_bytes": 645.0744050019101,
+   "b_bytes_per_token": 32256.083349056742,
+   "c_bytes_per_group": 114686.50861522836,
+   "fit_max_rel_err": 7.905329651844535e-05,
+   "fit_max_rel_err_n_ge_64": 1.4205144417149017e-06
+  },
+  {
+   "id": "int4_tok",
+   "label": "INT4 per-token",
+   "a_bytes": 639.9364981760393,
+   "b_bytes_per_token": 35840.09668194468,
+   "c_bytes_per_group": -1.6684493420046984,
+   "fit_max_rel_err": 0.0006134718778448132,
+   "fit_max_rel_err_n_ge_64": 1.2559997043614066e-06
+  }
+ ],
+ "presets": [
+  {
+   "id": "scifact",
+   "label": "SciFact",
+   "num_docs": 3216,
+   "mean_doc_tokens": 241.34048507462686,
+   "doc_tokens_min": 73,
+   "doc_tokens_max": 257,
+   "corpus_total_bytes": {
+    "bf16": 89023053176,
+    "fp8_tensor": 44516297640,
+    "fp8_head": 44518818984,
+    "int8_tok": 45211417160,
+    "int4_kivi": 28099347104,
+    "int4_tok": 27826126080
+   },
+   "fit_estimate_bytes": {
+    "bf16": 89023046401.18488,
+    "fp8_tensor": 44516288917.89393,
+    "fp8_head": 44518810261.89391,
+    "int8_tok": 45211402810.844574,
+    "int4_kivi": 27995087264.39282,
+    "int4_tok": 27826108853.701504
+   },
+   "fit_rel_err": {
+    "bf16": -7.610180607908745e-08,
+    "fp8_tensor": -1.9593062616785062e-07,
+    "fp8_head": -1.959195299328087e-07,
+    "int8_tok": -3.173790233956808e-07,
+    "int4_kivi": -0.0037104007869399602,
+    "int4_tok": -6.19069231766467e-07
+   },
+   "naive_bf16_bytes_per_doc": 34445449.55223881
+  },
+  {
+   "id": "nfcorpus",
+   "label": "NFCorpus",
+   "num_docs": 2471,
+   "mean_doc_tokens": 241.42816673411573,
+   "doc_tokens_min": 21,
+   "doc_tokens_max": 257,
+   "corpus_total_bytes": {
+    "bf16": 68426902360,
+    "fp8_tensor": 34217900584,
+    "fp8_head": 34219837848,
+    "int8_tok": 34752187448,
+    "int4_kivi": 21595080872,
+    "int4_tok": 21389418768
+   },
+   "fit_estimate_bytes": {
+    "bf16": 68426897278.784294,
+    "fp8_tensor": 34217894148.878826,
+    "fp8_head": 34219831412.87882,
+    "int8_tok": 34752176101.9307,
+    "int4_kivi": 21518463132.624023,
+    "int4_tok": 21389405802.631454
+   },
+   "fit_rel_err": {
+    "bf16": -7.425757309054148e-08,
+    "fp8_tensor": -1.8806300394746955e-07,
+    "fp8_head": -1.880523575747972e-07,
+    "int8_tok": -3.264850396700325e-07,
+    "int4_kivi": -0.00354792555907113,
+    "int4_tok": -6.061580581917525e-07
+   },
+   "naive_bf16_bytes_per_doc": 34455505.58640227
+  }
+ ]
+}

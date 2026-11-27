@@ -1,7 +1,7 @@
 # .gitignore
 
 # Project data and heavy outputs (never commit)
-data/
+/data/
 artifacts/
 *.pt
 *.pth
@@ -45,3 +45,9 @@ logs/
 *.swp
 
 results/vllm/runs/
+
+app/node_modules/
+app/.next/
+app/out/
+app/.vercel/
+app/next-env.d.ts
