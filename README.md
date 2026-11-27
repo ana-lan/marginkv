@@ -1,5 +1,7 @@
 # MarginKV: Storage-Efficient KV Cache Reuse for Decoder-Only Reranking
 
+**Results explorer:** [marginkv.vercel.app](https://marginkv.vercel.app), an interactive view of the quantization and serving results (every number is read from `results/` by `scripts/14_export_app_data.py`).
+
 A decoder-only reranker can read each document once and keep its KV cache "in the margins," then reuse it for every query that retrieves that document. This repo measures three things: what document-first scoring costs in ranking quality, how far the stored document KV can be compressed before ranking quality drops, and whether the reuse actually pays off when the reranker is served on real traffic.
 
 **Status:** Phases 1 to 5 and the vLLM serving study (8a) are done: document-first adaptation, cache correctness, KV quantization with packed storage, and prefix-cache serving on the real query stream. Token pruning, combined compression and disk benchmarks are next (see [Roadmap](#roadmap)).
