@@ -2,9 +2,9 @@
 
 **Results explorer:** [marginkv.vercel.app](https://marginkv.vercel.app), an interactive view of the quantization and serving results (every number is read from `results/` by `scripts/14_export_app_data.py`).
 
-A decoder-only reranker can read each document once and keep its KV cache "in the margins," then reuse it for every query that retrieves that document. This repo measures three things: what document-first scoring costs in ranking quality, how far the stored document KV can be compressed (fewer bits, fewer tokens) before ranking quality drops, and whether the reuse actually pays off when the reranker is served on real traffic.
+A decoder-only reranker can read each document once and keep its KV cache "in the margins," then reuse it for every query that retrieves that document. This repo measures three things: what document-first scoring costs in ranking quality, how far the stored document KV can be compressed (fewer bits, fewer tokens, or both) before ranking quality drops, and whether the reuse actually pays off when the reranker is served on real traffic.
 
-**Status:** Phases 1 to 6 and the vLLM serving study (8a) are done: document-first adaptation, cache correctness, KV quantization with packed storage, query-independent token pruning, and prefix-cache serving on the real query stream. Combined compression and disk benchmarks are next (see [Roadmap](#roadmap)).
+**Status:** Phases 1 to 7 and the vLLM serving study (8a) are done: document-first adaptation, cache correctness, KV quantization with packed storage, query-independent token pruning, combined pruning + quantization, and prefix-cache serving on the real query stream. Disk benchmarks and a length-matched LoRA retrain are next (see [Roadmap](#roadmap)).
 
 ## Results at a glance
 
@@ -13,12 +13,13 @@ A decoder-only reranker can read each document once and keep its KV cache "in th
 - **INT4 (KIVI-style) cuts stored document KV 3.2x with no meaningful quality change:** 8.33 MiB per doc instead of 26.4 MiB, with nDCG@10 +0.0010 on SciFact and −0.0009 on NFCorpus. INT8 (1.97x) shows no measurable loss on either dataset. All sizes are measured from packed files on disk that round-trip bit-exactly.
 - **The quantization axis matters more than the bit width.** The same INT4 budget with per-token keys loses 0.04 to 0.10 nDCG@10. Qwen3's post-RoPE keys have outlier channels, so keys need per-channel scales.
 - **Dropping tokens is a much weaker lever than dropping bits.** Only 75% token retention (1.33x) stays within one point. At the same ~13 MiB per doc, FP8 and INT8 lose at most 0.0015 nDCG@10 while 50% pruning loses 0.008 to 0.08, and INT4 beats every pruning setting. Importance scores from the document's own attention do no better than random, because they favor the end of the document; keeping its start matters more (a post-hoc finding).
+- **Bits and tokens combine.** Dropping 25% of document tokens and quantizing the rest to INT4 KIVI stores 6.27 MiB per doc (4.2x) within one point on both datasets (−0.0028 / −0.0001), with no sign that the two losses compound. At about the same size, pruning alone loses 0.02 to 0.06.
 - **In real traffic, cache capacity decides whether reuse pays off.** Served with vLLM on the BEIR query stream, 46 to 62% of documents repeat, but LRU eviction and 64-token blocks leave doc-first serving only 0.16 / 0.29 of prompt tokens from cache. FP8 KV doubles capacity and lifts that to 0.23 / 0.37 at −0.003 / −0.001 nDCG@10. A simple block-level cache simulator predicts every measured hit rate.
 
 ## Question
 
 - **Q1.** Can Qwen3-Reranker-0.6B score with the document *before* the query, so the document's KV is query-independent and reusable, without losing ranking quality?
-- **Q2.** Given that model, how much can the stored document KV be compressed (quantization, query-independent token pruning) before ranking quality drops?
+- **Q2.** Given that model, how much can the stored document KV be compressed (quantization, query-independent token pruning, or both) before ranking quality drops?
 
 HyperRAG ([An et al., 2025](https://arxiv.org/abs/2504.02921)) established document-side KV reuse for decoder-only rerankers and discussed low-bit KV quantization, but did not evaluate quantized KV. Most KV compression work targets generation, where the cache lives for one request. Here the cache is query-independent and reused across many queries, so the question is storage: bytes per document vs. ranking quality. AdaptCache ([2025](https://arxiv.org/abs/2509.00105)) is the closest storage-side work, for generation serving.
 
@@ -108,7 +109,7 @@ Methods, each at 25 / 50 / 75% of document tokens:
 - **Random:** seeded per document.
 - **H2O-style (diagnostic):** plain accumulated attention (Σ of attention received, no normalization). Reported, never selected.
 
-Same harness, baseline, margin and verdict rules as quantization. The rules, including how a setting is picked for Phase 7, were committed before the full run. Δ nDCG@10 vs BF16 (bold = within 1 point):
+Same harness, baseline, margin and verdict rules as quantization. The rules, including how a setting is picked for combined compression, were committed before the full run. Δ nDCG@10 vs BF16 (bold = within 1 point):
 
 | Method | SciFact 75% | 50% | 25% | NFCorpus 75% | 50% | 25% |
 |---|---|---|---|---|---|---|
@@ -136,9 +137,40 @@ Same harness, baseline, margin and verdict rules as quantization. The rules, inc
 4. **Scores move a lot even when rankings don't.** At 75% retention, scores shift by up to 6 to 14 log-odds and 4 to 7.5% of pairs swap order (vs 0.3 log-odds and 0.4% for bf16 noise), yet uniform pruning stays within 0.0015 nDCG@10.
 5. **Pruning isn't a speed lever here.** Scoring at 25% retention is only 15 to 23% faster per batch on the Mac, because fixed per-batch costs dominate at this size.
 
-About half of every document token's attention goes to the first token of the shared prefix (an attention sink), which is never pruned. Importance rankings are identical whether computed in MPS bf16 or CPU fp32. **Phase 7 setting (pre-registered rule):** uniform 75%, combined with FP8 and INT4 KIVI.
+About half of every document token's attention goes to the first token of the shared prefix (an attention sink), which is never pruned. Importance rankings are identical whether computed in MPS bf16 or CPU fp32. **Setting for combined compression (pre-registered rule):** uniform 75%, combined with FP8 and INT4 KIVI in [section 5](#5-combined-compression-q2).
 
-### 5. Serving with vLLM
+### 5. Combined compression (Q2)
+
+Prune first, then quantize the kept tokens: uniform 75% retention (the Phase 6 pick), then FP8 per-tensor or INT4 KIVI. The shared prefix stays BF16 and positions are unchanged, as before. KIVI's key groups form over the kept tokens, so a 32-token group can span tokens that were far apart in the document. All four arms of each 2×2 (baseline, pruning only, quantization only, both) are scored in the same run. The three single-method arms reproduce their Phase 5 and 6 score files exactly. Rules, including the interaction test and the frontier rule, were committed before the full run.
+
+| Setting | MiB per doc | vs BF16 | SciFact Δ (95% CI) | NFCorpus Δ (95% CI) | Verdict (Sci / NFC) |
+|---|---|---|---|---|---|
+| BF16 | 26.40 | 1.00x | baseline | baseline | |
+| Uniform 75% | 19.82 | 1.33x | −0.0014 [−0.0096, +0.0063] | −0.0006 [−0.0041, +0.0030] | 1 pt / 1 pt |
+| FP8 per-tensor | 13.20 | 2.00x | −0.0013 [−0.0042, +0.0006] | −0.0006 [−0.0017, +0.0006] | 1 pt / none |
+| INT4 KIVI | 8.33 | 3.17x | +0.0010 [−0.0007, +0.0038] | −0.0009 [−0.0027, +0.0007] | 1 pt / 1 pt |
+| **Uniform 75% + FP8** | **9.91** | **2.66x** | −0.0029 [−0.0112, +0.0046] | −0.0020 [−0.0058, +0.0017] | 1 pt / 1 pt |
+| **Uniform 75% + INT4 KIVI** | **6.27** | **4.21x** | −0.0028 [−0.0110, +0.0048] | −0.0001 [−0.0039, +0.0037] | 1 pt / 1 pt |
+| Uniform 25% (for comparison) | 6.59 | 4.01x | −0.0617 [−0.0861, −0.0379] | −0.0194 [−0.0282, −0.0108] | loss / loss |
+
+Sizes are exact packed file sizes (bytes = a + b·kept tokens + c·⌈kept/32⌉), checked against real files that round-trip bit-exactly.
+
+**Do the losses compound?** Per query, the interaction is I = (both − pruning only) − (quantization only − baseline). It is zero if the two losses simply add and negative if quantization costs more on a pruned cache.
+
+| Interaction I (95% CI) | SciFact | NFCorpus |
+|---|---|---|
+| Uniform 75% + FP8 | −0.0003 [−0.0032, +0.0026] | −0.0008 [−0.0025, +0.0007] |
+| Uniform 75% + INT4 KIVI | −0.0024 [−0.0060, +0.0001] | +0.0014 [−0.0004, +0.0033] |
+
+#### What we learned
+
+1. **The losses add; compounding isn't shown.** The pre-registered test (CI below zero on both datasets) fails for both formats, and for INT4 the two datasets point in opposite directions. FP8's interaction is inside ±0.004 on both datasets. INT4's is inside ±0.004 on NFCorpus and inside one point on SciFact, where the CI just reaches zero. Part of that SciFact value is INT4 alone scoring slightly above the baseline (+0.0010), a gain that doesn't repeat on the pruned cache.
+2. **Combining is the only way below 8 MiB per doc within one point.** At 6.27 MiB, pruning + INT4 is smaller than every single-method setting we measured. At nearly the same size (6.59 MiB), 25% pruning alone is worse by +0.059 [+0.036, +0.083] on SciFact and +0.019 [+0.011, +0.028] on NFCorpus (paired). The pre-registered frontier rule labels it "on the frontier", but only because no single method reaches this size, so there is nothing smaller to compare against.
+3. **Pruning on top of INT4 costs too little to measure.** Against INT4 alone: −0.0038 [−0.0117, +0.0034] and +0.0008 [−0.0029, +0.0047]. That is 3.17x to 4.21x for a cost the CIs can't separate from zero.
+4. **Pruning + FP8 isn't worth it.** At 9.91 MiB it is larger than INT4 KIVI alone and no better (INT4 minus combined: +0.0040 / +0.0011, CIs include zero). It beats 6 of the 7 smaller single-method settings but can't be separated from INT4 KIVI, so the frontier rule labels it "not separated". It is also measurably worse than pruning alone (about −0.0015 on both datasets), which is FP8's own cost showing up.
+5. **The order of the two steps matters for some formats.** Formats whose scales depend only on one token (INT8 per-token, KIVI values) give identical results either way. KIVI keys and FP8 scales are computed across tokens, so they change when tokens are removed first (checked in `tests/test_combined.py`). We prune first, because that is what gets stored.
+
+### 6. Serving with vLLM
 
 Does document-first KV reuse actually pay off when the reranker is served for real? We served the models with vLLM 0.34.0 on one RTX 4090 (24 GB, RunPod), with automatic prefix caching on and vLLM's defaults otherwise (including the block size it picked, 64 tokens). Scores come from the yes/no logprobs of a single generated token (`allowed_token_ids = [no, yes]`, processed logprobs, the model's own sampling config ignored), using the same token ids as every earlier phase.
 
@@ -180,13 +212,13 @@ Traces 1 (same query, 20 docs) and 2 (same doc, 20 queries), concurrency 1/4/16 
 - **Post-RoPE keys:** keys are quantized after RoPE, because that's what is stored. Pre-RoPE quantization (KVQuant) may do better.
 - **Strict margin:** the ±0.002 margin is about 10x the measured noise. INT4 KIVI lands in "within 1 point" because its CI is wider than the margin (on SciFact, on the upside), not because of a measured loss.
 - **Shared prefix:** quality was measured with each doc's own copy of the shared prefix. Using one canonical copy, as the storage numbers assume, shifts scores by at most 0.048 log-odds (6x below the noise floor).
-- **Pruning:** importance comes only from the document's own attention (the query is never seen, by design), averaged over all heads and layers into one kept set shared by every layer. Learned or per-layer selection may do better. Random pruning uses one seed. The early-token finding is post hoc. Pruning storage is measured on packed BF16 files; combined pruning + quantization comes in Phase 7.
+- **Pruning:** importance comes only from the document's own attention (the query is never seen, by design), averaged over all heads and layers into one kept set shared by every layer. Learned or per-layer selection may do better. Random pruning uses one seed. The early-token finding is post hoc. Pruning storage is measured on packed BF16 files.
+- **Combined compression:** one pruning setting (uniform 75%, chosen by the Phase 6 rule) and two formats. The interaction CIs on SciFact are about ±0.004 wide, so a compounding effect smaller than that can't be ruled out. "Smallest point within one point" is relative to the settings measured here.
 - **Hardware:** Mac timing comes from a fanless laptop and is only relative.
 - **Serving:** one rented RTX 4090, one run per configuration, vLLM 0.34 defaults (64-token blocks), a closed-loop replay of BEIR test queries with no arrival times, and FP8 KV without calibrated scales. The query-first serving baseline is the original model; the doc-first settings use the LoRA. These are benchmarks, not a production deployment.
 
 ## Roadmap
 
-- **Phase 7:** uniform 75% pruning combined with FP8 and INT4 KIVI. Do the losses compound?
 - **Phase 8b:** cold-disk load benchmarks for the packed formats, a length-matched LoRA retrain, and optional serving follow-ups (16-token blocks, calibrated FP8 KV scales).
 - **Phase 9:** plots, final README, LoRA weights on Hugging Face.
 - **Follow-ups:** a pre-registered "keep the first N tokens" pruning arm, learned or per-layer token selection.
@@ -209,6 +241,7 @@ python scripts/06b_merge_check.py && python scripts/06c_eval_lora.py && python s
 python scripts/07a_noise_floor.py && python scripts/07_quant_sweep.py
 python scripts/08_pack_storage.py
 python scripts/09a_importance.py && python scripts/09_prune_sweep.py && python scripts/09b_prune_summary.py   # pruning (~1.7 h on the Air)
+python scripts/10_combined_sweep.py && python scripts/10b_combined_summary.py   # combined compression (~1 h on the Air)
 python scripts/11a_build_traces.py && python scripts/11c_gate_reference.py   # serving traces + gate reference
 ```
 
@@ -222,13 +255,15 @@ python scripts/11b_vllm_gate.py --setting df
 python scripts/11_vllm_bench.py --setting df --traces t3 t1 t2 --concurrency 16 4 1
 ```
 
-Summaries from the committed run files (the pruning summary also needs `09a`'s importance artifacts):
+Summaries from the committed run files (the pruning summary also needs `09a`'s importance artifacts; the combined summary loads the model to check a sample of packed files):
 
 ```bash
 tar xzf results/vllm/runs.tar.gz -C results/vllm
 python scripts/11d_vllm_summary.py
 tar xzf results/scores/p6_scores.tar.gz
 python scripts/09b_prune_summary.py
+tar xzf results/scores/p7_scores.tar.gz
+python scripts/10_combined_sweep.py && python scripts/10b_combined_summary.py
 ```
 
 Every script writes JSON to `results/` with provenance (git commit, package versions, input hashes). Long runs are resumable and have a `--smoke N` mode. The LoRA weights will be on Hugging Face in Phase 9; until then, step 06 needs a GPU (about 1.5 h on an RTX 4090).
@@ -238,9 +273,9 @@ Tests: `python tests/test_<name>.py` (plain asserts).
 ## Repo layout
 
 ```
-src/marginkv/   config, data, retrieval (BM25), models (Qwen3, bge), kv (cache ops, sweep, quant, pack, prune), serving (vLLM client), train (LoRA), eval
+src/marginkv/   config, data, retrieval (BM25), models (Qwen3, bge), kv (cache ops, sweep, quant, pack, prune, combined), serving (vLLM client), train (LoRA), eval
 scripts/        numbered pipeline steps
-tests/          parity, equality, quantizer, packing and pruning tests
+tests/          parity, equality, quantizer, packing, pruning and combined-compression tests
 results/        committed JSON: candidates, scores, metrics, traces, vLLM runs
 ```
 
