@@ -1,0 +1,208 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-28T05:08:34+00:00",
+    "git_commit": "536cf99f565996d1759c5a390aebef57d98e140a",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "rules": {
+    "phase": "8b.2",
+    "source": "official MS MARCO v1 document ranking train files (FILES), sha256 recorded per file",
+    "doc_text": "title + ' ' + body; title dropped if empty, '-' or '.'",
+    "char_cut": "text cut to the first 3000 chars before tokenizing; a cut doc must have >= 300 tokens, else it is unusable (a negative is skipped; a positive drops its query). doc_full_len of a cut doc = tokens of the cut text (a lower bound)",
+    "window": "first max_doc_tokens (256) Qwen tokens of ' ' + text (FirstP), same truncation as BEIR",
+    "pool": "doctrain qids with a qrel and a query, sorted, shuffled with random.Random(f'{seed}-msmarco-doc'), first `pool`",
+    "answer_in_window": "option B: some Tevatron positive passage text of the same qid, as an ASCII lowercase alphanumeric word sequence, appears contiguously in the window's word sequence; qids absent from Tevatron are dropped",
+    "negatives": "official doctrain top100 ranks 1..30 in rank order; train.data.select_group on the window text (dedup by id and normalized text, never equal to the positive, top neg_pool by stemmed overlap, seeded sample of group_size - 1)",
+    "leakage": "drop a query whose normalized text equals a test query; drop a group if any doc's cut text contains a 13-word shingle of any SciFact/NFCorpus test doc (title + text) or its URL contains ('nutritionfacts.org',)",
+    "split": "dev filled first, then train, in pool order",
+    "tokenization": "same pieces as Phase 2 / 3.1 (asserted); doc = window ids; seam variant B; queries in both orders"
+  },
+  "source": {
+    "queries": {
+      "file": "msmarco-doctrain-queries.tsv.gz",
+      "url": "https://msmarco.z22.web.core.windows.net/msmarcoranking/msmarco-doctrain-queries.tsv.gz",
+      "size": 6457962,
+      "sha256": "45cf2d92116faaa0cd14ade28b14136402230d677ebc88b2ab65d81efb7e8035"
+    },
+    "qrels": {
+      "file": "msmarco-doctrain-qrels.tsv.gz",
+      "url": "https://msmarco.z22.web.core.windows.net/msmarcoranking/msmarco-doctrain-qrels.tsv.gz",
+      "size": 2385717,
+      "sha256": "f734da158920a2b5ab1b6237b3a2f2d4833109b42c9afb611ccc88ec782a2595"
+    },
+    "top100": {
+      "file": "msmarco-doctrain-top100.gz",
+      "url": "https://msmarco.z22.web.core.windows.net/msmarcoranking/msmarco-doctrain-top100.gz",
+      "size": 403564127,
+      "sha256": "fb8b40a082688e4be6664f887fe02964dd0e1c313021619cc33c1e1e208e0a19"
+    },
+    "docs": {
+      "file": "msmarco-docs.tsv.gz",
+      "url": "https://msmarco.z22.web.core.windows.net/msmarcoranking/msmarco-docs.tsv.gz",
+      "size": 8446274598,
+      "sha256": "78f5cbaae6be4376561a3a16f475c9be6dbcd50e696a67b08fd825c21a263b35"
+    },
+    "tevatron": {
+      "repo": "Tevatron/msmarco-passage",
+      "revision": "330a160b40a739d4c07d52c7ce562e2c549214c0",
+      "file": "train.jsonl.gz",
+      "size": 1726062395,
+      "sha256": "9df43ab7a970fc63e9eca68b7a3a26036221339b6d2d7619d959306f96ec3193"
+    }
+  },
+  "content_sha256": "533441ce8576117860395ba445c74a9414b4e83101ed593ed1b84b5cfb982a63",
+  "settings": {
+    "n_train": 12000,
+    "n_dev": 1000,
+    "group_size": 8,
+    "neg_pool": 15,
+    "pool": 110000,
+    "parity_queries": 3000,
+    "force": false
+  },
+  "stats": {
+    "doctrain_queries": 367013,
+    "eligible": 367013,
+    "pool": 110000,
+    "pool_in_tevatron": 88249,
+    "answer_in_window": {
+      "checked": 82391,
+      "pass_rate": 0.1978,
+      "outside_but_in_cut_text": 8132,
+      "not_found_in_cut_text": 57959
+    },
+    "drops": {
+      "leak_query": 0,
+      "dup_query": 1,
+      "no_passage_label": 20308,
+      "pos_doc_missing": 0,
+      "pos_doc_bad": 148,
+      "answer_outside_window": 66091,
+      "few_negatives": 0,
+      "no_positive": 0,
+      "leak_doc": 17,
+      "leak_url": 2
+    },
+    "num_train": 12000,
+    "num_dev": 1000,
+    "num_docs": 96972,
+    "dev_docs_also_in_train": 874,
+    "doc_tokens_window": {
+      "n": 96972,
+      "mean": 253.93,
+      "p50": 256,
+      "p95": 256,
+      "max": 256
+    },
+    "doc_tokens_cut_text": {
+      "n": 96972,
+      "mean": 634.12,
+      "p50": 646,
+      "p95": 844,
+      "max": 2624
+    },
+    "doc_chars_full": {
+      "n": 96972,
+      "mean": 10307.59,
+      "p50": 5337,
+      "p95": 34083,
+      "max": 660811
+    },
+    "truncated_frac": 0.9705,
+    "query_tokens_df": {
+      "n": 13000,
+      "mean": 6.9,
+      "p50": 7,
+      "p95": 12,
+      "max": 59
+    },
+    "seq_len_qf": {
+      "n": 104000,
+      "mean": 332.89,
+      "p50": 334,
+      "p95": 339,
+      "max": 386
+    },
+    "seq_len_df": {
+      "n": 104000,
+      "mean": 332.82,
+      "p50": 334,
+      "p95": 339,
+      "max": 387
+    },
+    "seam_kind": {
+      "appended": 83572,
+      "merged": 13260,
+      "fallback": 140
+    },
+    "hardness_mean": {
+      "pos_overlap": 0.8664,
+      "neg_overlap_chosen": 0.7593,
+      "neg_overlap_all": 0.5975,
+      "max_neg_ge_pos": 0.9005
+    },
+    "parity": {
+      "pairs": 893,
+      "query_first_match": 893,
+      "doc_first_seam_match": 887,
+      "doc_first_by_kind": {
+        "merged": {
+          "pairs": 502,
+          "match": 502
+        },
+        "appended": {
+          "pairs": 385,
+          "match": 385
+        },
+        "fallback": {
+          "pairs": 6,
+          "match": 0
+        }
+      }
+    },
+    "phase4_reference": {
+      "passage_tokens_full": {
+        "n": 101848,
+        "mean": 86.28,
+        "p50": 77,
+        "p95": 153,
+        "max": 1882
+      },
+      "truncated_frac": 0.0009,
+      "seq_len_qf": {
+        "n": 104000,
+        "mean": 165.07,
+        "p50": 156,
+        "p95": 233,
+        "max": 348
+      },
+      "seq_len_df": {
+        "n": 104000,
+        "mean": 164.17,
+        "p50": 155,
+        "p95": 232,
+        "max": 349
+      },
+      "hardness_mean": {
+        "pos_overlap": 0.8194,
+        "neg_overlap_chosen": 0.5892,
+        "neg_overlap_all": 0.5195,
+        "max_neg_ge_pos": 0.5975
+      }
+    }
+  }
+}
