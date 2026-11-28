@@ -135,6 +135,32 @@ def test_h2o_and_transform():
     pk = keep_all(kv, "d")
     assert all(torch.equal(x, y) for x, y in zip(pk.keys, kv.keys)) and pk.n_cached == kv.n_cached
 
+
+def test_pack_pruned():
+    import pathlib
+    import tempfile
+    from marginkv.kv import pack as K
+    from marginkv.kv import quant as Q
+    s, T, L = 5, 70, 2
+    g = torch.Generator().manual_seed(0)
+    keys = [torch.randn(8, s + T, 128, generator=g).to(torch.bfloat16) for _ in range(L)]
+    vals = [torch.randn(8, s + T, 128, generator=g).to(torch.bfloat16) for _ in range(L)]
+    kv = DocKV(keys=keys, values=vals, next_pos=s + T, shared_len=s)
+    keep, _ = P.select_keep("random", T, 0.5, seed=3)
+    pk = P.prune_doc(kv, keep)
+    sk, sv = [k[:, :s] for k in kv.keys], [v[:, :s] for v in kv.values]
+    with tempfile.TemporaryDirectory() as tmp:
+        for fmt in ("bf16", "fp8_tensor", "int8_tok", "int4_kivi"):
+            path = pathlib.Path(tmp) / f"{fmt}.safetensors"
+            ref = pk if fmt == "bf16" else Q.quantize_doc(pk, fmt)
+            info = K.pack_doc(pk, fmt, path)
+            back = K.unpack_doc(path, sk, sv)
+            assert back.next_pos == s + T and back.shared_len == s and back.n_cached == pk.n_cached, fmt
+            assert all(torch.equal(a, b) for a, b in zip(back.keys, ref.keys)), f"{fmt} keys not bit-exact"
+            assert all(torch.equal(a, b) for a, b in zip(back.values, ref.values)), f"{fmt} values not bit-exact"
+            want = K.predicted_file_bytes(fmt, len(keep), s, L, 8, 128, "bfloat16", next_pos=s + T)
+            assert info["file_bytes"] == want, (fmt, info["file_bytes"], want)
+
     
 def test_prune_doc_synthetic():
     s, T, L = 3, 10, 2
@@ -279,7 +305,7 @@ def main():
     args = ap.parse_args()
     for f in (test_budget_and_mandatory, test_methods_basic, test_uniform_and_boundary_shape,
               test_attn_ranking_ties, test_importance_hand, test_importance_uniform_b_is_one,
-              test_h2o_and_transform,
+              test_h2o_and_transform, test_pack_pruned,
               test_prune_doc_synthetic):
         f()
         print(f"PASS {f.__name__}")

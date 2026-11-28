@@ -51,3 +51,5 @@ app/.next/
 app/out/
 app/.vercel/
 app/next-env.d.ts
+
+results/scores/qwen3_lora_dfB_cached_p6_*.json

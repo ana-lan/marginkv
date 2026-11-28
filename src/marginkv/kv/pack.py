@@ -127,10 +127,17 @@ def pack_doc(kv: DocKV, fmt: str, path) -> dict:
 
 
 @functools.lru_cache(maxsize=None)
-def predicted_file_bytes(fmt, n_doc, shared_len, layers=28, heads=8, head_dim=128, dtype_name="bfloat16") -> int:
+def predicted_file_bytes(fmt, n_doc, shared_len, layers=28, heads=8, head_dim=128, dtype_name="bfloat16",
+                         next_pos=None) -> int:
+    """Exact packed file size via zero-tensor serialization.
+
+    next_pos defaults to shared_len + n_doc (unpruned cache). Pruned caches keep their original next_pos,
+    so pass it: only its digit count can change the header size.
+    """
     dt = getattr(torch, dtype_name)
     zeros = {n: torch.zeros(shape, dtype=d) for n, (shape, d) in tensor_specs(fmt, n_doc, layers, heads, head_dim, dt).items()}
-    meta = metadata(fmt, n_doc, shared_len + n_doc, shared_len, layers, heads, head_dim, dtype_name)
+    np_ = shared_len + n_doc if next_pos is None else next_pos
+    meta = metadata(fmt, n_doc, np_, shared_len, layers, heads, head_dim, dtype_name)
     return len(save(zeros, metadata=meta))
 
 
