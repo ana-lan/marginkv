@@ -1,0 +1,1426 @@
+{
+  "run_info": {
+    "timestamp_utc": "2026-11-28T03:19:49+00:00",
+    "git_commit": "b6f6fe50e031203b040d320d78e825d60356dc55",
+    "git_dirty": true,
+    "python": "3.11.15",
+    "platform": "Darwin arm64",
+    "packages": {
+      "torch": "2.15.0",
+      "transformers": "5.23.0",
+      "tokenizers": "0.23.3",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "2.4.0",
+      "bm25s": "0.3.16",
+      "PyStemmer": "3.1.0",
+      "pytrec-eval-terrier": "0.5.11",
+      "numpy": "2.4.6",
+      "pandas": "3.1.1"
+    }
+  },
+  "phase": "7.4",
+  "rule": "with packed MiB/doc per dataset (7.4): single-method pool = Phase 5 formats incl. bf16 + Phase 6 non-diagnostic arms. combined arm C is dominated iff some single X with MiB(X) <= MiB(C) on both datasets has paired CI of (X - C) lower > 0 on both; on_frontier iff for every single X with MiB(X) <= MiB(C) on both, CI of (C - X) lower > 0 on both; else not_separated. The point-estimate frontier is reported as descriptive only",
+  "rules_sha256": "37a993c4963efe65e9547d97d4c7e6b735da6d2b16f6cc67a280e2a84c44258b",
+  "datasets": {
+    "scifact": {
+      "num_queries": 300,
+      "margin": 0.002,
+      "shared_len": 59,
+      "shared_file_bytes": 6766864,
+      "bf16_mib_per_doc": 26.396935944533467,
+      "size_checks": {
+        "uniform_r75": {
+          "mib": 19.818519340818796,
+          "ref_mib": 19.818519340818796,
+          "rel_diff": 0.0,
+          "match": true
+        },
+        "fp8_tensor": {
+          "mib": 13.198879457824859,
+          "ref_mib": 13.198879457824859,
+          "rel_diff": 0.0,
+          "match": true
+        },
+        "int4_kivi": {
+          "mib": 8.330588388205761,
+          "ref_mib": 8.330588388205761,
+          "rel_diff": 0.0,
+          "match": true
+        }
+      },
+      "pack_sample": {
+        "rows": [
+          {
+            "doc": "25475802",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 11067992,
+            "predicted": 11067992,
+            "on_disk": 11067992,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "25475802",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 7028880,
+            "predicted": 7028880,
+            "on_disk": 7028880,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "25817686",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 256,
+            "kept": 192,
+            "kept_matches_sweep": true,
+            "file_bytes": 11010648,
+            "predicted": 11010648,
+            "on_disk": 11010648,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "25817686",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 256,
+            "kept": 192,
+            "kept_matches_sweep": true,
+            "file_bytes": 6881936,
+            "predicted": 6881936,
+            "on_disk": 6881936,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "43128141",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 73,
+            "kept": 55,
+            "kept_matches_sweep": true,
+            "file_bytes": 3154512,
+            "predicted": 3154512,
+            "on_disk": 3154512,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "43128141",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 73,
+            "kept": 55,
+            "kept_matches_sweep": true,
+            "file_bytes": 2004104,
+            "predicted": 2004104,
+            "on_disk": 2004104,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "9988425",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 11067992,
+            "predicted": 11067992,
+            "on_disk": 11067992,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "9988425",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 7028880,
+            "predicted": 7028880,
+            "on_disk": 7028880,
+            "size_match": true,
+            "bit_exact": true
+          }
+        ],
+        "n": 8,
+        "all_ok": true
+      },
+      "points": {
+        "q:bf16": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 26.396935944533467,
+          "ratio_vs_bf16": 1.0,
+          "corpus_gib": 82.90917908400297,
+          "ratio_vs_bf16_corpus": 1.0,
+          "d_ndcg10": 0.0,
+          "ndcg10_ci": null,
+          "d_mrr10": 0.0,
+          "verdict": "baseline",
+          "point_frontier": false
+        },
+        "q:fp8_tensor": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "fp8_tensor",
+          "diagnostic": false,
+          "mib_per_doc": 13.198879457824859,
+          "ratio_vs_bf16": 1.9999376484103155,
+          "corpus_gib": 41.45903293043375,
+          "ratio_vs_bf16_corpus": 1.9997856492002735,
+          "d_ndcg10": -0.0012526139035779914,
+          "ndcg10_ci": [
+            -0.004200787580817114,
+            0.0005546874378164307
+          ],
+          "d_mrr10": -0.001833333333333333,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "q:fp8_head": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "fp8_head",
+          "diagnostic": false,
+          "mib_per_doc": 13.199627138488921,
+          "ratio_vs_bf16": 1.9998243637930033,
+          "corpus_gib": 41.46138111501932,
+          "ratio_vs_bf16_corpus": 1.9996723904107778,
+          "d_ndcg10": -0.0015305564610771176,
+          "ndcg10_ci": [
+            -0.004274172434666957,
+            -5.95615218253485e-05
+          ],
+          "d_mrr10": -0.0019259259259259262,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "q:int8_tok": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int8_tok",
+          "diagnostic": false,
+          "mib_per_doc": 13.405010562631029,
+          "ratio_vs_bf16": 1.9691842704040725,
+          "corpus_gib": 42.106413431465626,
+          "ratio_vs_bf16_corpus": 1.969039211068163,
+          "d_ndcg10": -0.00015764868125524116,
+          "ndcg10_ci": [
+            -0.0007953864863544676,
+            0.00035116305117702696
+          ],
+          "d_mrr10": -0.00017592592592592595,
+          "verdict": "no_measurable_loss",
+          "point_frontier": false
+        },
+        "q:int4_kivi": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int4_kivi",
+          "diagnostic": false,
+          "mib_per_doc": 8.330588388205761,
+          "ratio_vs_bf16": 3.168676054371572,
+          "corpus_gib": 26.16955628991127,
+          "ratio_vs_bf16_corpus": 3.168153795407132,
+          "d_ndcg10": 0.0010286583711321272,
+          "ndcg10_ci": [
+            -0.0006932344192660694,
+            0.003836781633748263
+          ],
+          "d_mrr10": 0.0014351851851851852,
+          "verdict": "within_1_point",
+          "point_frontier": true
+        },
+        "q:int4_tok": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int4_tok",
+          "diagnostic": false,
+          "mib_per_doc": 8.249567283326714,
+          "ratio_vs_bf16": 3.1997964302787842,
+          "corpus_gib": 25.915099382400513,
+          "ratio_vs_bf16_corpus": 3.1992614753508657,
+          "d_ndcg10": -0.09660638252290037,
+          "ndcg10_ci": [
+            -0.11999391615427107,
+            -0.07415137464669057
+          ],
+          "d_mrr10": -0.11495634920634923,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:uniform_r25": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.06168606929591528,
+          "ndcg10_ci": [
+            -0.08605078911407202,
+            -0.037945817799459554
+          ],
+          "d_mrr10": -0.07145105820105821,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:uniform_r50": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.012173228069243031,
+          "ndcg10_ci": [
+            -0.027650753806665485,
+            0.002930632993030626
+          ],
+          "d_mrr10": -0.009085978835978835,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:uniform_r75": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.0013666728652725491,
+          "ndcg10_ci": [
+            -0.009598727581097876,
+            0.006275872998612143
+          ],
+          "d_mrr10": -0.004634920634920636,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:boundary_r25": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.14883970408638797,
+          "ndcg10_ci": [
+            -0.17969479909312483,
+            -0.11813022357235921
+          ],
+          "d_mrr10": -0.17718915343915345,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:boundary_r50": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.08221162471808058,
+          "ndcg10_ci": [
+            -0.10799945903623383,
+            -0.056831009699144806
+          ],
+          "d_mrr10": -0.09719841269841269,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:boundary_r75": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.030990563948120928,
+          "ndcg10_ci": [
+            -0.04865542702436475,
+            -0.01400798152539741
+          ],
+          "d_mrr10": -0.03479761904761905,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r25": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.08753529797127733,
+          "ndcg10_ci": [
+            -0.11364925462954038,
+            -0.06248764809670624
+          ],
+          "d_mrr10": -0.10240873015873016,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r50": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.029393472839364745,
+          "ndcg10_ci": [
+            -0.046322045557002346,
+            -0.012892971844246991
+          ],
+          "d_mrr10": -0.03771164021164021,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r75": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.00916816264849919,
+          "ndcg10_ci": [
+            -0.020544572458219102,
+            0.0013939340743174585
+          ],
+          "d_mrr10": -0.013009259259259259,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:attn_b_r25": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.16369207448681355,
+          "ndcg10_ci": [
+            -0.19387858433402005,
+            -0.1340044156583996
+          ],
+          "d_mrr10": -0.19698544973544974,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_b_r50": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.0416007452014732,
+          "ndcg10_ci": [
+            -0.06260906671223782,
+            -0.021208092945536074
+          ],
+          "d_mrr10": -0.04950793650793651,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_b_r75": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.01010027320762586,
+          "ndcg10_ci": [
+            -0.021394249110966816,
+            0.0006998191619081786
+          ],
+          "d_mrr10": -0.01225,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:random_r25": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.08176987892388252,
+          "ndcg10_ci": [
+            -0.10891800187898436,
+            -0.05582025008199363
+          ],
+          "d_mrr10": -0.10142724867724867,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:random_r50": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.014573384834088718,
+          "ndcg10_ci": [
+            -0.030793776753640856,
+            0.0011434953488594576
+          ],
+          "d_mrr10": -0.018723544973544972,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:random_r75": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.0009185788397975456,
+          "ndcg10_ci": [
+            -0.008751462101619705,
+            0.006697158600431519
+          ],
+          "d_mrr10": 0.0006666666666666658,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:attn_h2o_r25": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 6.586449504491702,
+          "ratio_vs_bf16": 4.007764111230457,
+          "corpus_gib": 20.691870108246803,
+          "ratio_vs_bf16_corpus": 4.0068480350144515,
+          "d_ndcg10": -0.038267679850415265,
+          "ndcg10_ci": [
+            -0.05713866816193011,
+            -0.02059107922676974
+          ],
+          "d_mrr10": -0.04820502645502646,
+          "verdict": "loss",
+          "point_frontier": null
+        },
+        "p:attn_h2o_r50": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 13.240918375366363,
+          "ratio_vs_bf16": 1.9935879971620996,
+          "corpus_gib": 41.591061405837536,
+          "ratio_vs_bf16_corpus": 1.993437442603141,
+          "d_ndcg10": -0.012517232908729478,
+          "ndcg10_ci": [
+            -0.025610367610096524,
+            -0.0008745139285713837
+          ],
+          "d_mrr10": -0.01637830687830688,
+          "verdict": "loss",
+          "point_frontier": null
+        },
+        "p:attn_h2o_r75": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 19.818519340818796,
+          "ratio_vs_bf16": 1.3319327993472032,
+          "corpus_gib": 62.24883943796158,
+          "ratio_vs_bf16_corpus": 1.331899194146935,
+          "d_ndcg10": -0.004914687505655525,
+          "ndcg10_ci": [
+            -0.012523195425483956,
+            0.0024905145670907273
+          ],
+          "d_mrr10": -0.007465608465608466,
+          "verdict": "within_1_point",
+          "point_frontier": null
+        },
+        "c:uniform_r75_fp8_tensor": {
+          "kind": "combined",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "fp8_tensor",
+          "diagnostic": false,
+          "mib_per_doc": 9.90967012519267,
+          "ratio_vs_bf16": 2.6637552623902545,
+          "corpus_gib": 31.128859870135784,
+          "ratio_vs_bf16_corpus": 2.663418430031993,
+          "d_ndcg10": -0.0029384577353057263,
+          "ndcg10_ci": [
+            -0.011170257600297466,
+            0.00460999357471373
+          ],
+          "d_mrr10": -0.005690476190476191,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "c:uniform_r75_int4_kivi": {
+          "kind": "combined",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "int4_kivi",
+          "diagnostic": false,
+          "mib_per_doc": 6.274922143167524,
+          "ratio_vs_bf16": 4.206735213962118,
+          "corpus_gib": 19.71347948908806,
+          "ratio_vs_bf16_corpus": 4.205710064014596,
+          "d_ndcg10": -0.002781790697768845,
+          "ndcg10_ci": [
+            -0.011039426924074966,
+            0.004797040009298499
+          ],
+          "d_mrr10": -0.005390211640211642,
+          "verdict": "within_1_point",
+          "point_frontier": true
+        }
+      }
+    },
+    "nfcorpus": {
+      "num_queries": 323,
+      "margin": 0.002,
+      "shared_len": 59,
+      "shared_file_bytes": 6766864,
+      "bf16_mib_per_doc": 26.406526081574587,
+      "size_checks": {
+        "uniform_r75": {
+          "mib": 19.82574510748017,
+          "ref_mib": 19.82574510748017,
+          "rel_diff": 0.0,
+          "match": true
+        },
+        "fp8_tensor": {
+          "mib": 13.203674449171917,
+          "ref_mib": 13.203674449171917,
+          "rel_diff": 0.0,
+          "match": true
+        },
+        "int4_kivi": {
+          "mib": 8.331938730855068,
+          "ref_mib": 8.331938730855068,
+          "rel_diff": 0.0,
+          "match": true
+        }
+      },
+      "pack_sample": {
+        "rows": [
+          {
+            "doc": "MED-3434",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 11067992,
+            "predicted": 11067992,
+            "on_disk": 11067992,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-3434",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 7028880,
+            "predicted": 7028880,
+            "on_disk": 7028880,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-4966",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 256,
+            "kept": 192,
+            "kept_matches_sweep": true,
+            "file_bytes": 11010648,
+            "predicted": 11010648,
+            "on_disk": 11010648,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-4966",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 256,
+            "kept": 192,
+            "kept_matches_sweep": true,
+            "file_bytes": 6881936,
+            "predicted": 6881936,
+            "on_disk": 6881936,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-5063",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 21,
+            "kept": 16,
+            "kept_matches_sweep": true,
+            "file_bytes": 918096,
+            "predicted": 918096,
+            "on_disk": 918096,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-5063",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 21,
+            "kept": 16,
+            "kept_matches_sweep": true,
+            "file_bytes": 631424,
+            "predicted": 631424,
+            "on_disk": 631424,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-999",
+            "arm": "uniform_r75_fp8_tensor",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 11067992,
+            "predicted": 11067992,
+            "on_disk": 11067992,
+            "size_match": true,
+            "bit_exact": true
+          },
+          {
+            "doc": "MED-999",
+            "arm": "uniform_r75_int4_kivi",
+            "doc_tokens": 257,
+            "kept": 193,
+            "kept_matches_sweep": true,
+            "file_bytes": 7028880,
+            "predicted": 7028880,
+            "on_disk": 7028880,
+            "size_match": true,
+            "bit_exact": true
+          }
+        ],
+        "n": 8,
+        "all_ok": true
+      },
+      "points": {
+        "q:bf16": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 26.406526081574587,
+          "ratio_vs_bf16": 1.0,
+          "corpus_gib": 63.72751887887716,
+          "ratio_vs_bf16_corpus": 1.0,
+          "d_ndcg10": 0.0,
+          "ndcg10_ci": null,
+          "d_mrr10": 0.0,
+          "verdict": "baseline",
+          "point_frontier": false
+        },
+        "q:fp8_tensor": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "fp8_tensor",
+          "diagnostic": false,
+          "mib_per_doc": 13.203674449171917,
+          "ratio_vs_bf16": 1.9999376827433595,
+          "corpus_gib": 31.867903269827366,
+          "ratio_vs_bf16_corpus": 1.9997399370549296,
+          "d_ndcg10": -0.0005940844383919614,
+          "ndcg10_ci": [
+            -0.0016518293088720977,
+            0.0005744450471734196
+          ],
+          "d_mrr10": 0.0002027126640129736,
+          "verdict": "no_measurable_loss",
+          "point_frontier": false
+        },
+        "q:fp8_head": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "fp8_head",
+          "diagnostic": false,
+          "mib_per_doc": 13.20442212983598,
+          "ratio_vs_bf16": 1.9998244392617428,
+          "corpus_gib": 31.869707487523556,
+          "ratio_vs_bf16_corpus": 1.999626727161691,
+          "d_ndcg10": 0.0003708468957861087,
+          "ndcg10_ci": [
+            -0.0010401177422207772,
+            0.001991526086830845
+          ],
+          "d_mrr10": 0.00015111307680967112,
+          "verdict": "no_measurable_loss",
+          "point_frontier": true
+        },
+        "q:int8_tok": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int8_tok",
+          "diagnostic": false,
+          "mib_per_doc": 13.409880705663232,
+          "ratio_vs_bf16": 1.969184265033964,
+          "corpus_gib": 32.365496687591076,
+          "ratio_vs_bf16_corpus": 1.9689955477590517,
+          "d_ndcg10": -9.781890577503937e-05,
+          "ndcg10_ci": [
+            -0.0014898854749659284,
+            0.0013451063291544897
+          ],
+          "d_mrr10": -0.0023219814241486067,
+          "verdict": "no_measurable_loss",
+          "point_frontier": false
+        },
+        "q:int4_kivi": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int4_kivi",
+          "diagnostic": false,
+          "mib_per_doc": 8.331938730855068,
+          "ratio_vs_bf16": 3.1693135216879598,
+          "corpus_gib": 20.111986316740513,
+          "ratio_vs_bf16_corpus": 3.168633762734445,
+          "d_ndcg10": -0.0009289230639804836,
+          "ndcg10_ci": [
+            -0.0027176064994785926,
+            0.0006928912745033123
+          ],
+          "d_mrr10": -0.00464764853309745,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "q:int4_tok": {
+          "kind": "quant",
+          "method": null,
+          "retention": 1.0,
+          "format": "int4_tok",
+          "diagnostic": false,
+          "mib_per_doc": 8.252564118777823,
+          "ratio_vs_bf16": 3.1997965361443694,
+          "corpus_gib": 19.920448556542397,
+          "ratio_vs_bf16_corpus": 3.199100597458554,
+          "d_ndcg10": -0.04344947676948299,
+          "ndcg10_ci": [
+            -0.05502423066937088,
+            -0.03227699685811507
+          ],
+          "d_mrr10": -0.0642328861369109,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:uniform_r25": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.019370075549182162,
+          "ndcg10_ci": [
+            -0.028215095435215772,
+            -0.010776481167525222
+          ],
+          "d_mrr10": -0.018860877684407095,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:uniform_r50": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.007950000044976646,
+          "ndcg10_ci": [
+            -0.013436901794082324,
+            -0.0027554712332546576
+          ],
+          "d_mrr10": -0.011948990122364738,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:uniform_r75": {
+          "kind": "prune",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": -0.0005739884434721174,
+          "ndcg10_ci": [
+            -0.004081870951822956,
+            0.0030025981288700635
+          ],
+          "d_mrr10": -0.0009300211312595222,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:boundary_r25": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.050449857532373674,
+          "ndcg10_ci": [
+            -0.06494759751914136,
+            -0.03697347431165296
+          ],
+          "d_mrr10": -0.08986805248415157,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:boundary_r50": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.031404887343868135,
+          "ndcg10_ci": [
+            -0.04295207038223754,
+            -0.020584966968299458
+          ],
+          "d_mrr10": -0.03678681999115435,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:boundary_r75": {
+          "kind": "prune",
+          "method": "boundary",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": -0.016123949205896493,
+          "ndcg10_ci": [
+            -0.023494588421969574,
+            -0.009026025995679077
+          ],
+          "d_mrr10": -0.02324561403508772,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r25": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.038499543744215776,
+          "ndcg10_ci": [
+            -0.05059065491005731,
+            -0.026766154058369178
+          ],
+          "d_mrr10": -0.058565531475748195,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r50": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.01382959164151033,
+          "ndcg10_ci": [
+            -0.019915669405196616,
+            -0.007935179714220506
+          ],
+          "d_mrr10": -0.025902992776057794,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_a_r75": {
+          "kind": "prune",
+          "method": "attn_a",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": -0.00632516621656698,
+          "ndcg10_ci": [
+            -0.010081438289286607,
+            -0.0027509715623563443
+          ],
+          "d_mrr10": -0.008806329549363605,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:attn_b_r25": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.06035022291486472,
+          "ndcg10_ci": [
+            -0.07421943232680628,
+            -0.0467728398150174
+          ],
+          "d_mrr10": -0.10566735466116273,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_b_r50": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.02309005898394989,
+          "ndcg10_ci": [
+            -0.03108968115321855,
+            -0.015271011185442803
+          ],
+          "d_mrr10": -0.03580888495749177,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:attn_b_r75": {
+          "kind": "prune",
+          "method": "attn_b",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": -0.009062180011942722,
+          "ndcg10_ci": [
+            -0.01350028602797693,
+            -0.004863990247605834
+          ],
+          "d_mrr10": -0.022346306943830167,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:random_r25": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.02866438375565065,
+          "ndcg10_ci": [
+            -0.038896534549052404,
+            -0.018565100423455806
+          ],
+          "d_mrr10": -0.04799130178387145,
+          "verdict": "loss",
+          "point_frontier": false
+        },
+        "p:random_r50": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.007871712119734161,
+          "ndcg10_ci": [
+            -0.014656676386225753,
+            -0.001346131898349091
+          ],
+          "d_mrr10": -0.013928202860091407,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:random_r75": {
+          "kind": "prune",
+          "method": "random",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": false,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": 0.00020333622305266074,
+          "ndcg10_ci": [
+            -0.00435826978566674,
+            0.004797564912256979
+          ],
+          "d_mrr10": 0.0015049879600963195,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "p:attn_h2o_r25": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.25,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 6.587777391323335,
+          "ratio_vs_bf16": 4.0084120201684765,
+          "corpus_gib": 15.903175115585327,
+          "ratio_vs_bf16_corpus": 4.007219842308303,
+          "d_ndcg10": -0.011279282198381273,
+          "ndcg10_ci": [
+            -0.01780592740133736,
+            -0.004715603412837609
+          ],
+          "d_mrr10": -0.024858715415990967,
+          "verdict": "loss",
+          "point_frontier": null
+        },
+        "p:attn_h2o_r50": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.5,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 13.244432530389629,
+          "ratio_vs_bf16": 1.9937831251723512,
+          "corpus_gib": 31.966256022453308,
+          "ratio_vs_bf16_corpus": 1.9935872012698181,
+          "d_ndcg10": -0.0028499563886794244,
+          "ndcg10_ci": [
+            -0.006969134916615554,
+            0.0011294742953160963
+          ],
+          "d_mrr10": -0.003615656789031401,
+          "verdict": "within_1_point",
+          "point_frontier": null
+        },
+        "p:attn_h2o_r75": {
+          "kind": "prune",
+          "method": "attn_h2o",
+          "retention": 0.75,
+          "format": "bf16",
+          "diagnostic": true,
+          "mib_per_doc": 19.82574510748017,
+          "ratio_vs_bf16": 1.3319310794332524,
+          "corpus_gib": 47.84752885252237,
+          "ratio_vs_bf16_corpus": 1.3318873598530188,
+          "d_ndcg10": -0.0014072062422368586,
+          "ndcg10_ci": [
+            -0.003995592272226125,
+            0.0010100962172147061
+          ],
+          "d_mrr10": -0.003916654381050666,
+          "verdict": "within_1_point",
+          "point_frontier": null
+        },
+        "c:uniform_r75_fp8_tensor": {
+          "kind": "combined",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "fp8_tensor",
+          "diagnostic": false,
+          "mib_per_doc": 9.913283316821813,
+          "ratio_vs_bf16": 2.6637517800752706,
+          "corpus_gib": 23.927906699478626,
+          "ratio_vs_bf16_corpus": 2.663313581052443,
+          "d_ndcg10": -0.002015364351574065,
+          "ndcg10_ci": [
+            -0.005776428014542797,
+            0.0017034197325867257
+          ],
+          "d_mrr10": -0.005173472897931105,
+          "verdict": "within_1_point",
+          "point_frontier": false
+        },
+        "c:uniform_r75_int4_kivi": {
+          "kind": "combined",
+          "method": "uniform",
+          "retention": 0.75,
+          "format": "int4_kivi",
+          "diagnostic": false,
+          "mib_per_doc": 6.274781777085876,
+          "ratio_vs_bf16": 4.208357679944411,
+          "corpus_gib": 15.14788980036974,
+          "ratio_vs_bf16_corpus": 4.207022873728699,
+          "d_ndcg10": -0.00012150779328874082,
+          "ndcg10_ci": [
+            -0.0038715976110066143,
+            0.0036684196774969245
+          ],
+          "d_mrr10": -0.0029510049633888653,
+          "verdict": "within_1_point",
+          "point_frontier": true
+        }
+      }
+    }
+  },
+  "frontier": {
+    "uniform_r75_fp8_tensor": {
+      "label": "not_separated",
+      "n_smaller": 7,
+      "vacuous": false,
+      "smaller": [
+        "q:int4_kivi",
+        "q:int4_tok",
+        "p:uniform_r25",
+        "p:boundary_r25",
+        "p:attn_a_r25",
+        "p:attn_b_r25",
+        "p:random_r25"
+      ],
+      "dominated_by": [],
+      "beats": [
+        "q:int4_tok",
+        "p:uniform_r25",
+        "p:boundary_r25",
+        "p:attn_a_r25",
+        "p:attn_b_r25",
+        "p:random_r25"
+      ],
+      "x_minus_c": {
+        "q:int4_kivi": {
+          "scifact": [
+            0.003967116106437854,
+            [
+              -0.003133064330957961,
+              0.011837664925365563
+            ]
+          ],
+          "nfcorpus": [
+            0.0010864412875935814,
+            [
+              -0.0028864757374822566,
+              0.004982226655433303
+            ]
+          ]
+        },
+        "q:int4_tok": {
+          "scifact": [
+            -0.09366792478759466,
+            [
+              -0.11627258057908095,
+              -0.07154739343363099
+            ]
+          ],
+          "nfcorpus": [
+            -0.04143411241790893,
+            [
+              -0.05277106578671221,
+              -0.030557859585874654
+            ]
+          ]
+        },
+        "p:uniform_r25": {
+          "scifact": [
+            -0.05874761156060954,
+            [
+              -0.08258463384449553,
+              -0.0358893282388663
+            ]
+          ],
+          "nfcorpus": [
+            -0.0173547111976081,
+            [
+              -0.026275719086375323,
+              -0.008720339766006786
+            ]
+          ]
+        },
+        "p:boundary_r25": {
+          "scifact": [
+            -0.14590124635108223,
+            [
+              -0.17665940777255548,
+              -0.11547951501107169
+            ]
+          ],
+          "nfcorpus": [
+            -0.048434493180799607,
+            [
+              -0.06296135150253393,
+              -0.035075479721447936
+            ]
+          ]
+        },
+        "p:attn_a_r25": {
+          "scifact": [
+            -0.0845968402359716,
+            [
+              -0.1097023115489732,
+              -0.060473463487603685
+            ]
+          ],
+          "nfcorpus": [
+            -0.03648417939264171,
+            [
+              -0.04878163874812846,
+              -0.02494728204240266
+            ]
+          ]
+        },
+        "p:attn_b_r25": {
+          "scifact": [
+            -0.16075361675150782,
+            [
+              -0.19015131220082235,
+              -0.1320700827911061
+            ]
+          ],
+          "nfcorpus": [
+            -0.05833485856329066,
+            [
+              -0.07224185140611016,
+              -0.044639933761239536
+            ]
+          ]
+        },
+        "p:random_r25": {
+          "scifact": [
+            -0.07883142118857679,
+            [
+              -0.10540541484722828,
+              -0.0532100089988118
+            ]
+          ],
+          "nfcorpus": [
+            -0.026649019404076588,
+            [
+              -0.037111383176324675,
+              -0.01641407252224316
+            ]
+          ]
+        }
+      },
+      "point_frontier": {
+        "scifact": false,
+        "nfcorpus": false
+      }
+    },
+    "uniform_r75_int4_kivi": {
+      "label": "on_frontier",
+      "n_smaller": 0,
+      "vacuous": true,
+      "smaller": [],
+      "dominated_by": [],
+      "beats": [],
+      "x_minus_c": {},
+      "point_frontier": {
+        "scifact": true,
+        "nfcorpus": true
+      }
+    }
+  }
+}
